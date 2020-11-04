@@ -1,0 +1,76 @@
+# 启动服务相关配置
+server:
+  port: 8422
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: synapsid-test
+  redis:
+    enable: true
+    pool:
+      maxIdle: -1  #  最大空闲数
+      minIdle: 10
+      maxTotal: -1 # 连接池的最大数据库连接数
+      maxWaitMillis: 30000 # 最大建立连接等待时间
+      minEvictableIdleTimeMillis: 1800000 #  逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
+      numTestsPerEvictionRun: 3 # 每次逐出检查时 逐出的最大数目 如果为负数就是: 1/abs(n), 默认3
+      timeBetweenEvictionRunsMillis: -1 # 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
+      testOnBorrow: false #  是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
+      testWhileIdle: false #   在空闲时检查有效性, 默认false
+    config:
+      hostName: 192.168.38.62
+      port: 6379
+      database: 0
+      password: line
+
+id:  #雪花算法配置
+  generate:
+    #    --workerId=0 --datacenterid=0  项目启动是需要制定工作空间 和数据中心
+    workerId: ${worker.id:0}
+    datacenterId: ${datacenter.id:0}
+    enable: true
+
+line:
+  web:
+    context:
+      enable: false
+      excludeUrlPatterns: [/generator/**,/cc/] # 不受拦截的地址配置
+
+# 动态数据源 配置
+  dynamic:
+    datasource:
+      enable: true
+      defaultDatasourceName: master
+      datasourceList:
+        - name: master
+          url: jdbc:mysql:localhost:3306/line?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: line
+          password: ycs19930606
+          driverClassName: com.mysql.jdbc.Driver
+          maxActive: 50
+          initialSize: 5
+          validationQuery: select 'x'
+          testWhileIdle: true
+          testOnBorrow: false
+          testOnReturn: false
+          poolPreparedStatements: true
+          maxOpenPreparedStatements: 20
+        - name: slave
+          url: jdbc:mysql:192.168.99.133:3306/line?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: ycs19930606
+          driverClassName: com.mysql.jdbc.Driver
+          maxActive: 50
+          initialSize: 5
+          validationQuery: select 'x'
+          testWhileIdle: true
+          testOnBorrow: false
+          testOnReturn: false
+          poolPreparedStatements: true
+          maxOpenPreparedStatements: 20
+# mybatis 配置
+  mybatis:
+    enable: true
+#mybatis:
+#  mapper-locations: classpath*:com/line/common/test/mybatis/dao/*xml

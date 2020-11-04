@@ -1,0 +1,44 @@
+#命令1
+sudo apt-get update
+#命令2
+sudo apt-get install mysql-server
+
+
+--  mysql  状态
+systemctl status mysql.service
+
+
+--.配置远程访问 ---------------------
+1 先登录
+sudo mysql -uroot -p
+show databases：查看所有的数据库
+use  mysql
+-- 修改密码  有时间密码太简单会报错
+
+set password for root@localhost = password('ycs19930606');
+
+-- 开放远程登录权限
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'ycs19930606' WITH GRANT OPTION;
+
+
+-- 关闭绑定IP
+
+sudo chmod 777 /etc/mysql/mysql.conf.d/mysqld.cnf
+vim /etc/mysql/mysql.conf.d/mysqld.cnf
+注释掉 bind-address          = 127.0.0.1
+
+
+
+
+--  刷新
+FLUSH PRIVILEGES;
+
+
+
+
+
+
+
+
+
+
