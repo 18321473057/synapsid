@@ -3,24 +3,19 @@ package com.line.common.cache.redis.constant;
 import java.io.Serializable;
 
 /**
-* @Title: RedisConstants 
-* @Package com.hoau.zodiac.cache.redis.constant 
 * @Description: Redis缓存使用的常量
-* @author 陈宇霖  
-* @date 2017/8/7 09:47
-* @version V1.0   
 */
 public class RedisConstants implements Serializable {
 
     /**
      * 只读缓存初始化标示的统一前缀
      */
-    public static final String STRONG_CACHE_INIT_FLAG_PREFIX = "zodiac.redis.strong.initialization.";
+    public static final String STRONG_CACHE_INIT_FLAG_PREFIX = "line.redis.strong.initialization.";
 
     /**
      * 只读缓存正在初始化时加锁标志的统一前缀
      */
-    public static final String STRONG_CACHE_INIT_LOCKING_FLAG_PREFIX = "zodiac.redis.strong.lock.";
+    public static final String STRONG_CACHE_INIT_LOCKING_FLAG_PREFIX = "line.redis.strong.lock.";
 
     /**
      * 只读缓存正在初始化时加锁的缓存对应的值，无实际意义，只要有此缓存就认为正在初始化

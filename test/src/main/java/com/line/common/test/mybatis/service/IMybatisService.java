@@ -1,5 +1,6 @@
 package com.line.common.test.mybatis.service;
 
+import com.github.pagehelper.PageInfo;
 import com.line.common.test.mybatis.po.TestPo;
 import com.line.common.test.mybatis.vo.TestVo;
 
@@ -28,4 +29,6 @@ public interface IMybatisService {
 
     //分页查询
     List<TestVo> listPage(TestVo vo);
+
+    PageInfo listpageInfo(TestVo vo);
 }

@@ -1,10 +1,9 @@
 package com.line.common.test.cache;
 
-import com.line.common.test.mybatis.po.TestPo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,13 +17,19 @@ public class CacheController {
 
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private UserCache userCache;
 
-    /**
-     * 通用mapper
-     */
     @RequestMapping("/test/1")
     public Integer selectOneByTKMapper() {
         return (Integer) redisTemplate.opsForValue().get("age");
+    }
+
+    //
+    @RequestMapping("/v1/usercache")
+    @ResponseBody
+    public UserDTO getuserCache() {
+        return userCache.get("ycs");
     }
 
 }

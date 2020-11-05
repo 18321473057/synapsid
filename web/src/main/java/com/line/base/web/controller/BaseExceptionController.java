@@ -1,9 +1,6 @@
 package com.line.base.web.controller;
 
 import com.line.base.web.exception.BusinessException;
-import com.line.base.web.response.PageResponse;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,14 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Component
 public class BaseExceptionController extends BaseController {
-    private static final Logger LOGGER = LogManager.getLogger(BaseExceptionController.class);
+//    private static final Logger LOGGER = LogManager.getLogger(BaseExceptionController.class);
 
     //异常处理逻辑
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public PageResponse handlerException(Exception exception) throws Exception {
         if (exception instanceof BusinessException) {
-            LOGGER.error("自定义异常被捕捉,e ={}", exception);
+//            LOGGER.error("自定义异常被捕捉,e ={}", exception);
             //自定义异常,自己写处理逻辑
             return returnFailure(((BusinessException) exception).getCode(),exception.getMessage());
         } else {

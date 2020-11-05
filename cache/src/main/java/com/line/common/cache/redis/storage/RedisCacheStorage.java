@@ -20,12 +20,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @param <K>
- * @param <V>
- * @author 陈宇霖
- * @ClassName RedisCacheStorage
  * @Description 通过redis存储缓存数据
- * @date 2017年08月07日09:02:21
  */
 public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, InitializingBean {
 
@@ -232,6 +227,40 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, Initial
         }
         redisTemplate.delete(cacheId);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 初始化只读缓存

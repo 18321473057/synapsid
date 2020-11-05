@@ -1,6 +1,7 @@
 package com.line.common.test.mybatis.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.line.base.datasource.dynamic.AnotherDatasource;
 import com.line.common.test.mybatis.dao.MybatisMapper;
 import com.line.common.test.mybatis.po.TestPo;
@@ -18,7 +19,7 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class MybatisService  implements IMybatisService {
+public class MybatisService implements IMybatisService {
 
     @Autowired
     private MybatisMapper mybatisMapper;
@@ -35,19 +36,19 @@ public class MybatisService  implements IMybatisService {
 
 
     /**
-     * @warning  可悲的事情发生了, 这注解只能在service的入口方法 标注才会生效
-     *
+     * @warning 可悲的事情发生了, 这注解只能在service的入口方法 标注才会生效
+     * <p>
      * 尝试再写一个service 来调用两次方法, 实现数据源切换
-     * */
+     */
     @AnotherDatasource("master")
     public String selectAnyAll() {
         String a = selectAnyMaster();
         String b = selectAnySlave();
-        return a+"-"+b;
+        return a + "-" + b;
     }
 
 
-    public TestPo selectOneByTKMapper(String  id) {
+    public TestPo selectOneByTKMapper(String id) {
         TestPo testPo = new TestPo();
         testPo.setId(id);
         return mybatisMapper.selectByPrimaryKey(testPo);
@@ -66,8 +67,14 @@ public class MybatisService  implements IMybatisService {
     }
 
     public List<TestVo> listPage(TestVo vo) {
-        PageHelper.startPage(vo.getPage(),vo.getRows());
+        PageHelper.startPage(vo.getPage(), vo.getRows());
         return mybatisMapper.listPage(vo);
+    }
+
+    public PageInfo listpageInfo(TestVo vo) {
+        PageHelper.startPage(vo.getPage(), vo.getRows());
+        List<TestVo> testVos = mybatisMapper.listPage(vo);
+        return new PageInfo(testVos);
     }
 
 

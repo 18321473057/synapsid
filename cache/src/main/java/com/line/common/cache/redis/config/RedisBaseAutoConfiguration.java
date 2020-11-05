@@ -1,12 +1,13 @@
 package com.line.common.cache.redis.config;
 
 
+import com.line.common.cache.redis.serializer.FastJsonRedisSerializer;
+import com.line.common.cache.redis.storage.RedisCacheStorage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
@@ -16,15 +17,13 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
-import java.time.Duration;
-
 /**
  * @Author: yangcs
  * @Date: 2020/11/2 17:13
  * @Description:
  */
 @Configuration
-@EnableConfigurationProperties({RedisConfigProperties.class,RedisPoolProperties.class})
+@EnableConfigurationProperties({RedisConfigProperties.class, RedisPoolProperties.class})
 public class RedisBaseAutoConfiguration {
 
 
@@ -36,7 +35,7 @@ public class RedisBaseAutoConfiguration {
     /**
      * JedisPoolConfig 连接池
      */
-    @Bean(name="jedisPoolConfig")
+    @Bean(name = "jedisPoolConfig")
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(rdisPoolProperties.getMaxIdle());
@@ -54,7 +53,7 @@ public class RedisBaseAutoConfiguration {
     /**
      * 单机版配置
      */
-    @Bean(name ="jedisConnectionFactory")
+    @Bean(name = "jedisConnectionFactory")
     public JedisConnectionFactory jedisConnectionFactory(JedisPoolConfig jedisPoolConfig) {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(redisConfigProperties.getHostName());
@@ -81,6 +80,21 @@ public class RedisBaseAutoConfiguration {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         initDomainRedisTemplate(redisTemplate, jedisConnectionFactory);
         return redisTemplate;
+    }
+
+    /**
+     * redis存储自动配置
+     */
+    @Bean("redisCacheStorage")
+    public RedisCacheStorage redisCacheStorage(@Qualifier("redisTemplate") RedisTemplate redisTemplate) {
+        RedisCacheStorage storage = new RedisCacheStorage();
+        FastJsonRedisSerializer serializer = new FastJsonRedisSerializer();
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(serializer);
+        redisTemplate.setHashKeySerializer(serializer);
+        redisTemplate.setHashValueSerializer(serializer);
+        storage.setRedisTemplate(redisTemplate);
+        return storage;
     }
 
     /**

@@ -1,12 +1,7 @@
 package com.line.common.cache.redis.storage;
 
 /**
- * @param <K>
- * @param <V>
- * @author 陈宇霖
  * @ClassName IRemoteCacheStore
- * @Description 远程缓存接口
- * @date 2017年08月07日08:35:55
  */
 public interface IRemoteCacheStore<K, V> {
 

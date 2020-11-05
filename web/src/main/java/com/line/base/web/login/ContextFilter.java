@@ -1,15 +1,12 @@
 package com.line.base.web.login;
 
-import com.alibaba.fastjson.JSON;
 import com.line.base.web.context.RequestContext;
 import com.line.base.web.context.SessionContext;
 import com.line.base.web.context.UserContext;
 import com.line.base.web.dataprovider.IUserProvider;
 import com.line.base.web.entity.IUser;
-import com.line.base.web.response.PageResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.entity.ContentType;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;

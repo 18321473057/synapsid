@@ -8,12 +8,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
 
 /**
-* @Title: FastJsonRedisSerializer 
-* @Package com.hoau.zodiac.cache.redis.serializer 
 * @Description: 基于fastjson的redis数据序列化工具
-* @author 陈宇霖  
-* @date 2017/8/7 10:41
-* @version V1.0   
 */
 
 /**
