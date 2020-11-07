@@ -1,7 +1,7 @@
 package com.line.common.test.resposttest;
 
-import com.line.base.web.response.AjaxResponse;
-import com.line.base.web.response.annotation.AjaxResponseVo;
+import com.line.base.web.response.annotation.AjaxResponse;
+import com.line.base.web.response.AjaxResponseVo;
 import com.line.common.test.mybatis.service.IBusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

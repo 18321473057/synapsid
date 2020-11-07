@@ -1,7 +1,5 @@
-package com.line.base.web.response.annotation;
+package com.line.base.web.response;
 
-
-import com.line.base.web.response.BasicResponse;
 
 /**
  * @Author: yangcs

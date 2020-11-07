@@ -1,9 +1,7 @@
 package com.line.base.web.exception;
 
-import com.line.base.web.response.AjaxResponse;
-import com.line.base.web.response.annotation.AjaxResponseVo;
+import com.line.base.web.response.AjaxResponseVo;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**

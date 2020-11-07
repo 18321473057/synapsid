@@ -1,9 +1,8 @@
-package com.line.base.web.response.annotation;
+package com.line.base.web.response;
 
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.line.base.web.response.BasicResponse;
 
 /**
  * @Author: yangcs

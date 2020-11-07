@@ -1,14 +1,13 @@
 package com.line.common.test.resposttest;
 
 import com.github.pagehelper.PageInfo;
-import com.line.base.web.response.AjaxResponse;
-import com.line.base.web.response.PageResponse;
+import com.line.base.web.response.annotation.AjaxResponse;
+import com.line.base.web.response.annotation.PageResponse;
 import com.line.common.test.mybatis.service.IMybatisService;
 import com.line.common.test.mybatis.vo.TestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.line.base.web.response;
+package com.line.base.web.response.annotation;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -9,10 +9,9 @@ import java.lang.annotation.*;
 @Documented
 @ResponseBody
 /**
- * @description 封装 普通ajax请求返回对象;
+ * @description 封装 分页请求返回注解;
+ * 使用此注解的方法需要返回 PageHelper的Page对象
  * */
-public @interface AjaxResponse {
+public @interface PageResponse {
 
-    boolean success() default true;
-
-}  
+}
