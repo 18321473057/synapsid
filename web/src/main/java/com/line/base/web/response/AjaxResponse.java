@@ -12,5 +12,7 @@ import java.lang.annotation.*;
  * @description 封装 普通ajax请求返回对象;
  * */
 public @interface AjaxResponse {
-  
+
+    boolean success() default true;
+
 }  

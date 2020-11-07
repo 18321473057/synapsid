@@ -6,6 +6,7 @@ import com.line.base.web.response.PageResponse;
 import com.line.common.test.mybatis.service.IMybatisService;
 import com.line.common.test.mybatis.vo.TestVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * @Description:
  */
 
-@RestController
+@Controller
 @RequestMapping("/tesp")
 public class RespTestController {
 
@@ -31,6 +32,17 @@ public class RespTestController {
         t.setAge("12");
         t.setName("杨传顺");
         return t;
+    }
+
+    @RequestMapping("/ajaxresp1")
+    @AjaxResponse
+    public  Object  business1(){
+        return "333";
+    }
+
+    @RequestMapping("/ajaxresp2")
+    @AjaxResponse
+    public  void  business2(){
     }
 
     @RequestMapping("/page")

@@ -23,8 +23,14 @@ public class AjaxResponseVo<T> extends BasicResponse<T> {
     }
 
     public static <T> AjaxResponseVo<T> error(T t) {
-        AjaxResponseVo response = getScuuess(AjaxResponseVo.class);
-        response.setObj(t);
+        AjaxResponseVo response = getError(AjaxResponseVo.class);
+        if (t instanceof String) {
+            //返回的是错误提示
+            response.setMsg((String) t);
+        } else {
+            //返回的是错误对象
+            response.setObj(t);
+        }
         return response;
     }
 

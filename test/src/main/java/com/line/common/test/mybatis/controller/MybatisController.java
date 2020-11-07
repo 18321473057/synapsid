@@ -5,6 +5,7 @@ import com.line.common.test.mybatis.service.IMybatisService;
 import com.line.common.test.mybatis.service.ISwitchoverService;
 import com.line.common.test.mybatis.vo.TestVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ import java.util.List;
  * @Date: 2020/10/23 13:39
  * @Description:
  */
-@RestController
+@Controller
 @RequestMapping("/mybatis")
 public class MybatisController {
 
