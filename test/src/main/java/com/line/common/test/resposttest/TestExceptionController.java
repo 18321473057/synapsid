@@ -26,10 +26,18 @@ public class TestExceptionController {
     }
 
 
+    @RequestMapping("/br")
+    @AjaxResponse
+    public String br() {
+        return businessService.throwBr();
+    }
+
+
+
     //没有按照json格式返回 会报错
     @RequestMapping("/foo")
     public AjaxResponseVo businessfoo() {
-        return AjaxResponseVo.error("没有@responseBody和restController,404");
+        return AjaxResponseVo.error("333","没有@responseBody和restController,404");
     }
 
 }

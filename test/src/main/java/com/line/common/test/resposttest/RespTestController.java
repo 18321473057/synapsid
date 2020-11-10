@@ -1,14 +1,18 @@
 package com.line.common.test.resposttest;
 
 import com.github.pagehelper.PageInfo;
+import com.line.base.web.request.RemoteRequestDto;
+import com.line.base.web.request.annotation.RemoteResponse;
 import com.line.base.web.response.annotation.AjaxResponse;
 import com.line.base.web.response.annotation.PageResponse;
 import com.line.common.test.mybatis.service.IMybatisService;
 import com.line.common.test.mybatis.vo.TestVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -35,13 +39,13 @@ public class RespTestController {
 
     @RequestMapping("/ajaxresp1")
     @AjaxResponse
-    public  Object  business1(){
+    public Object business1() {
         return "333";
     }
 
     @RequestMapping("/ajaxresp2")
     @AjaxResponse
-    public  void  business2(){
+    public void business2() {
     }
 
     @RequestMapping("/page")
@@ -54,5 +58,22 @@ public class RespTestController {
     @PageResponse
     public PageInfo testpageinfo(TestVo vo) {
         return mybatisService.listpageInfo(vo);
+    }
+
+    @RequestMapping("/remote")
+    @RemoteResponse
+    public List<TestModel> testremote(@RequestBody RemoteRequestDto<List<TestModel>> vo,@RequestBody Object o ,TestModel r) {
+        return vo.getData();
+    }
+
+
+    @RequestMapping("/remote1")
+    @RemoteResponse
+    public TestModel testremot1e(String name,String  messageId, HttpServletRequest request) {
+        String messageId1 = request.getParameter("messageId");
+        TestModel t = new TestModel();
+        t.setAge("12");
+        t.setName("杨传顺");
+        return t;
     }
 }

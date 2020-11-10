@@ -17,7 +17,6 @@ public class BasicResponse<T> {
     //返回信息
     protected String msg;
 
-
     public static <R extends BasicResponse> R getScuuess(Class<R> cr) {
         try {
             R r = cr.newInstance();

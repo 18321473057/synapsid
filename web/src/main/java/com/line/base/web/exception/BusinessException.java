@@ -1,5 +1,9 @@
 package com.line.base.web.exception;
 
+import com.line.base.web.response.RemoteErrorItemDto;
+
+import java.util.List;
+
 /**
  * @Author: yangcs
  * @Date: 2020/4/14 15:43
@@ -9,6 +13,7 @@ package com.line.base.web.exception;
 public class BusinessException extends RuntimeException {
 
     private String code;
+
 
     public String getCode() {
         return code;
@@ -26,6 +31,7 @@ public class BusinessException extends RuntimeException {
         super(message);
         this.code = code;
     }
+
 
     public BusinessException() {
 

@@ -8,4 +8,6 @@ package com.line.common.test.mybatis.service;
 public interface IBusinessService {
     //业务异常测试拦截效果
     String throwBusiness();
+
+    String throwBr();
 }

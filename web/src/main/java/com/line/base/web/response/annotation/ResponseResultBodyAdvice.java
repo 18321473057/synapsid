@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.line.base.web.constans.RemoteReqConstants;
 import com.line.base.web.exception.BusinessException;
+import com.line.base.web.request.annotation.RemoteResponse;
 import com.line.base.web.response.AjaxResponseVo;
 import com.line.base.web.response.BasicResponse;
 import com.line.base.web.response.PageResponseVo;
@@ -16,12 +18,18 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 方法上必须包含@ResponseBody 注解才会走这个类
+ */
 @RestControllerAdvice
 public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
     //ajax返回信息包装注解
@@ -50,7 +58,6 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
         }
         return false;
     }
-
 
     /**
      * 处理注解
@@ -81,7 +88,8 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
     }
 
     private Object disposeRemoteAnnotation(Object body, MethodParameter returnType, ServerHttpRequest request) {
-        return RemoteResponseDto.success(body);
+        HttpServletRequest hRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        return RemoteResponseDto.success((String) hRequest.getAttribute(RemoteReqConstants.MESSAGE_ID), (long) hRequest.getAttribute(RemoteReqConstants.TIMESTAMP), body);
     }
 
     private Object disposePageAnnotation(Object body) {
