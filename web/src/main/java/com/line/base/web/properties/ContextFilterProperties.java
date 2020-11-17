@@ -5,12 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 
 /**
- * @author 陈宇霖
- * @version V1.0
- * @Title: ContextFilterProperties
- * @Package com.hoau.zodiac.springboot.autoconfig.context
  * @Description: context过滤器配置参数
- * @date 2017/8/17 09:47
  */
 @ConfigurationProperties(prefix = "line.web.context")
 public class ContextFilterProperties {

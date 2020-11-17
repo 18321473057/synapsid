@@ -10,5 +10,9 @@ public class RemoteReqConstants {
     public static final String MESSAGE_ID = "messageId";
     //时间戳
     public static final String TIMESTAMP = "timestamp";
+    //密文
+    public static final String AUTHORIZATION = "remoteAuthorization";
+    //app key
+    public static final String APP_KEY = "remoteAppKey";
 
 }

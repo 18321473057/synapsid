@@ -40,4 +40,13 @@ public class RemoteRequestDto<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        return "RemoteRequestDto{" +
+                "timestamp=" + timestamp +
+                ", messageId='" + messageId + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

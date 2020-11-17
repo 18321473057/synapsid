@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @ResponseBody
 public @interface RemoteResponse {
     //messageId/timestamp 必填校验
-    boolean paramRequired() default true;
+//    boolean paramRequired() default true;
     //鉴权校验
     boolean AuthenticRequired() default true;
 }
