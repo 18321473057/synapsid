@@ -29,9 +29,9 @@ import java.util.*;
 public class ParamsVerifyFilter extends OncePerRequestFilter {
 
     /**
-     * 允许的请求延迟时间(秒), 默认3分钟
+     * 允许的请求延迟时间(毫秒), 默认3分钟
      */
-    private long requestTimeDelaySeconds = 180;
+    private long requestTimeDelaySeconds = 180000;
 
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 

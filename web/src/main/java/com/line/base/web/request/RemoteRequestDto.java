@@ -1,6 +1,8 @@
 package com.line.base.web.request;
 
 
+import java.util.Objects;
+
 /**
  * @Author: yangcs
  * @Date: 2020/3/27 14:04
@@ -14,8 +16,6 @@ public class RemoteRequestDto<T> {
     //请求消息ID
     private String messageId;
 
-    //返回对象
-    private T data;
 
     public long getTimestamp() {
         return timestamp;
@@ -33,12 +33,18 @@ public class RemoteRequestDto<T> {
         this.messageId = messageId;
     }
 
-    public T getData() {
-        return data;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RemoteRequestDto<?> that = (RemoteRequestDto<?>) o;
+        return timestamp == that.timestamp &&
+                Objects.equals(messageId, that.messageId);
     }
 
-    public void setData(T data) {
-        this.data = data;
+    @Override
+    public int hashCode() {
+        return Objects.hash(timestamp, messageId);
     }
 
     @Override
@@ -46,7 +52,6 @@ public class RemoteRequestDto<T> {
         return "RemoteRequestDto{" +
                 "timestamp=" + timestamp +
                 ", messageId='" + messageId + '\'' +
-                ", data=" + data +
                 '}';
     }
 }

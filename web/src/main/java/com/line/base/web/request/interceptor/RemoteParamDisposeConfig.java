@@ -1,6 +1,5 @@
 package com.line.base.web.request.interceptor;
 
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,8 +14,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class RemoteParamDisposeConfig extends WebMvcConfigurationSupport {
 
     @Bean
-    public RemoteParamDisposeInterceptor remoteParamDisposeInterceptor() {
-        return new RemoteParamDisposeInterceptor();
+    public RemoteRequestParamInterceptor remoteParamDisposeInterceptor() {
+        return new RemoteRequestParamInterceptor();
     }
 
 

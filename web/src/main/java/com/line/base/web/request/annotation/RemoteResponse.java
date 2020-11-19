@@ -18,5 +18,5 @@ public @interface RemoteResponse {
     //messageId/timestamp 必填校验
 //    boolean paramRequired() default true;
     //鉴权校验
-    boolean AuthenticRequired() default true;
+//    boolean AuthenticRequired() default true;
 }

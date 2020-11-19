@@ -19,7 +19,7 @@ spring:
       testOnBorrow: false #  是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
       testWhileIdle: false #   在空闲时检查有效性, 默认false
     config:
-      hostName: 192.168.38.62
+      hostName: 192.168.38.148
       port: 6379
       database: 0
       password: line
@@ -36,6 +36,9 @@ line:
     context:
       enable: false
       excludeUrlPatterns: [/generator/**,/cc/] # 不受拦截的地址配置
+    security:
+      securityMap:
+        lineApiKey: $~@#oOm!2~<?
 
 # 动态数据源 配置
   dynamic:

@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: context过滤器配置参数
+ * @Description:
  */
 @Component("securityProperties")
 @ConfigurationProperties(prefix = "line.web.security")
-public class SecurityProperties {
+public class RemoteSecurityProperties {
 
     private Map<String,String> securityMap;
 
