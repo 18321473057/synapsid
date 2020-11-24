@@ -3,6 +3,9 @@ package com.line.common.cache.redis.config;
 
 import com.line.common.cache.redis.serializer.FastJsonRedisSerializer;
 import com.line.common.cache.redis.storage.RedisCacheStorage;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -95,6 +98,15 @@ public class RedisBaseAutoConfiguration {
         redisTemplate.setHashValueSerializer(serializer);
         storage.setRedisTemplate(redisTemplate);
         return storage;
+    }
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+        String redisUrl = String.format("redis://%s:%s", redisConfigProperties.getHostName(), redisConfigProperties.getPort());
+        config.useSingleServer().setAddress(redisUrl).setPassword(redisConfigProperties.getPassword());
+        config.useSingleServer().setDatabase(0);
+        return Redisson.create(config);
     }
 
     /**

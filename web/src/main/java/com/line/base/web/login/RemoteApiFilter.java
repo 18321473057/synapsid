@@ -1,9 +1,8 @@
-package com.line.base.web.login.filter;
+package com.line.base.web.login;
 
 
 import com.alibaba.fastjson.JSON;
 import com.line.base.web.constans.RemoteReqConstants;
-import com.line.base.web.login.RemoteSecurityInfo;
 import com.line.base.web.properties.RemoteSecurityProperties;
 import com.line.base.web.request.RemoteRequestDto;
 import com.line.common.utils.bean.MapUtils;
@@ -12,6 +11,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -34,14 +37,18 @@ import java.util.concurrent.TimeUnit;
  * 1:该过滤器只做接口鉴权和保护使用,不做自动封装返回对象逻辑;
  * 自动封装返回对象逻辑写在RemoteParamDisposeInterceptor和@RemoteResponse
  * <p>
- * 2:该过滤器并未生效,如要使用请另写一个过滤器来继承并加入拦截器组;例如下代码
- *
- * @WebFilter(servletNames = "remoteApiFilter", urlPatterns = {"/action/remote/api/*"})
- * @Component 3: 根据拦截路劲 urlPatterns = {"/action/remote/api/*"})  和 排除路径  excludeUrlPatterns  灵活配置;
+ * 2:该过滤器并未生效,如要使用请另写一个过滤器来继承并加入拦截器组;加入拦截器组代码如下
  */
 
-//@WebFilter(servletNames = "remoteApiFilter", urlPatterns = {"/action/remote/api/*"})
-//@Component
+//@Bean
+//public FilterRegistrationBean aramsVerifyFilterRegistration() {
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        registrationBean.setFilter(new RemoteApiFilter());
+//        registrationBean.setUrlPatterns(Arrays.asList("/sync/*"));
+//        registrationBean.setOrder(Ordered.LOWEST_PRECEDENCE - 10000);
+//        return registrationBean;
+//        }
+
 public class RemoteApiFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(RemoteApiFilter.class);
 
@@ -52,12 +59,15 @@ public class RemoteApiFilter extends OncePerRequestFilter {
     /**
      * 排除校验的地址
      */
-    private List<String> excludeUrlPatterns = new ArrayList(Arrays.asList("/action/remote/api"));
+    private List<String> excludeUrlPatterns = new ArrayList(Arrays.asList("/sync/*"));
 
     @Autowired
     private RemoteSecurityProperties properties;
     @Autowired
     private RedisTemplate redisTemplate;
+//    @Autowired
+//    private RedissonClient redisson;
+
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
 

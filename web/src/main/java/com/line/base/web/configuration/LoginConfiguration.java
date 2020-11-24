@@ -2,6 +2,7 @@ package com.line.base.web.configuration;
 
 import com.line.base.web.constans.UrlConstants;
 import com.line.base.web.login.ContextFilter;
+import com.line.base.web.login.RemoteApiFilter;
 import com.line.base.web.properties.ContextFilterProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -11,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 
 import java.util.Arrays;
 
@@ -47,6 +49,19 @@ public class LoginConfiguration {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(contextFilter);
         registrationBean.setUrlPatterns(Arrays.asList(UrlConstants.MATCH_ALL_URL_PATTERN));
+        return registrationBean;
+    }
+
+
+    /**
+     * 参数签名校验过滤器实例
+     */
+    @Bean
+    public FilterRegistrationBean aramsVerifyFilterRegistration() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new RemoteApiFilter());
+        registrationBean.setUrlPatterns(Arrays.asList("/sync/*"));
+        registrationBean.setOrder(Ordered.LOWEST_PRECEDENCE - 10000);
         return registrationBean;
     }
 }

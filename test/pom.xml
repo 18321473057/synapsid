@@ -36,11 +36,11 @@
             <version>1.0.RELEASE</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.line.common</groupId>
-            <artifactId>cache</artifactId>
-            <version>1.0.RELEASE</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.line.common</groupId>-->
+<!--            <artifactId>cache</artifactId>-->
+<!--            <version>1.0.RELEASE</version>-->
+<!--        </dependency>-->
 
         <!--        <dependency>-->
         <!--            <groupId>io.springfox</groupId>-->

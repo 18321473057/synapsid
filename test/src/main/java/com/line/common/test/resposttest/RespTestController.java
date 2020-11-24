@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,7 +65,7 @@ public class RespTestController {
     @RequestMapping("/remote")
     @RemoteResponse
     public List<TestModel> testremote(@RequestBody RemoteRequestDto<List<TestModel>> vo, HttpSession s, TestModel r,int q ,String  c,char a1) {
-        return vo.getData();
+        return new ArrayList<TestModel>();
     }
 
 
