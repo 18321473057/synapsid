@@ -29,7 +29,6 @@ import redis.clients.jedis.JedisPoolConfig;
 @EnableConfigurationProperties({RedisConfigProperties.class, RedisPoolProperties.class})
 public class RedisBaseAutoConfiguration {
 
-
     @Autowired
     private RedisConfigProperties redisConfigProperties;
     @Autowired

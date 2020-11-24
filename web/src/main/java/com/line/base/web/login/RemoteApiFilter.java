@@ -8,6 +8,8 @@ import com.line.base.web.request.RemoteRequestDto;
 import com.line.common.utils.bean.MapUtils;
 import com.line.common.utils.encryption.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
+//import org.redisson.api.RLock;
+//import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,12 +139,15 @@ public class RemoteApiFilter extends OncePerRequestFilter {
 
         //TODO  redis锁校验是否重复提交,(这里要使用redis锁)
         String rediskey = request.getRequestURI() + request.getAttribute(RemoteReqConstants.MESSAGE_ID) + request.getAttribute(RemoteReqConstants.TIMESTAMP);
-        Object o = redisTemplate.opsForValue().get(rediskey);
-        if (o != null) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            logger.error("请求地址[{}],请求时间超时,timestamp=[{}],currentTimeMillis=[{}]", securityInfo.getRequestUri(), securityInfo.getTimestamp(), currentTimeMillis);
+//        RLock lock = redisson.getLock("m");
+//        lock.
+//        lock.lock(requestTimeDelaySeconds,TimeUnit.SECONDS);
 
-        }
+//        if (o != null) {
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            logger.error("请求地址[{}],请求时间超时,timestamp=[{}],currentTimeMillis=[{}]", securityInfo.getRequestUri(), securityInfo.getTimestamp(), currentTimeMillis);
+//
+//        }
         redisTemplate.opsForValue().set(rediskey, "true", requestTimeDelaySeconds, TimeUnit.MILLISECONDS);
 
         //获取秘钥
