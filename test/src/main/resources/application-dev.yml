@@ -36,9 +36,14 @@ line:
     context:
       enable: false
       excludeUrlPatterns: [/generator/**,/cc/] # 不受拦截的地址配置
-    security:
-      securityMap:
-        lineApiKey: $~@#oOm!2~<?
+    client:  # 客户端
+      security:
+        securityMap:
+          lineApiKey: $~@#oOm!2~<?
+    server:  # 服务端
+      security:
+        securityMap:
+          lineApiKey: $~@#oOm!2~<?
 
 # 动态数据源 配置
   dynamic:

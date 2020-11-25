@@ -3,15 +3,14 @@ package com.line.base.web.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * @Description:
  */
-@Component("securityProperties")
-@ConfigurationProperties(prefix = "line.web.server.security")
-public class RemoteSecurityProperties {
+@Component("remoteRequestProperties")
+@ConfigurationProperties(prefix = "line.web.client.security")
+public class RemoteRequestProperties {
 
     private Map<String,String> securityMap;
 

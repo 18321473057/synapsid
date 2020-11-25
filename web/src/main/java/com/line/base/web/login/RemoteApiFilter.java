@@ -2,20 +2,18 @@ package com.line.base.web.login;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.line.base.web.constans.RemoteReqConstants;
 import com.line.base.web.properties.RemoteSecurityProperties;
 import com.line.base.web.request.RemoteRequestDto;
 import com.line.common.utils.bean.MapUtils;
 import com.line.common.utils.encryption.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
-//import org.redisson.api.RLock;
-//import org.redisson.api.RedissonClient;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -66,12 +63,8 @@ public class RemoteApiFilter extends OncePerRequestFilter {
     @Autowired
     private RemoteSecurityProperties properties;
     @Autowired
-    private RedisTemplate redisTemplate;
-//    @Autowired
-//    private RedissonClient redisson;
-
+    private RedissonClient redisson;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
-
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -133,22 +126,21 @@ public class RemoteApiFilter extends OncePerRequestFilter {
         long differSeconds = currentTimeMillis - securityInfo.getTimestamp();
         if (differSeconds < 0 || differSeconds > requestTimeDelaySeconds) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            logger.error("请求地址[{}],请求时间超时,timestamp=[{}],currentTimeMillis=[{}]", securityInfo.getRequestUri(), securityInfo.getTimestamp(), currentTimeMillis);
+            logger.error(" 请求时间超时,请求信息[{}]", JSONObject.toJSON(securityInfo));
             return;
         }
 
-        //TODO  redis锁校验是否重复提交,(这里要使用redis锁)
-        String rediskey = request.getRequestURI() + request.getAttribute(RemoteReqConstants.MESSAGE_ID) + request.getAttribute(RemoteReqConstants.TIMESTAMP);
-//        RLock lock = redisson.getLock("m");
-//        lock.
-//        lock.lock(requestTimeDelaySeconds,TimeUnit.SECONDS);
-
-//        if (o != null) {
-//            response.setStatus(HttpStatus.FORBIDDEN.value());
-//            logger.error("请求地址[{}],请求时间超时,timestamp=[{}],currentTimeMillis=[{}]", securityInfo.getRequestUri(), securityInfo.getTimestamp(), currentTimeMillis);
-//
-//        }
-        redisTemplate.opsForValue().set(rediskey, "true", requestTimeDelaySeconds, TimeUnit.MILLISECONDS);
+        //  redisson锁校验是否重复提交
+        RLock lock = redisson.getLock(getRedisKey(request));
+        if (lock.isLocked()) {
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+            logger.error("重复请求,请求信息[{}]", JSONObject.toJSON(securityInfo));
+        }
+        try {
+            lock.tryLock(1, requestTimeDelaySeconds, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.error(" 加锁失败,请求信息[{}]", JSONObject.toJSON(securityInfo));
+        }
 
         //获取秘钥
         String secureKey = properties.getSecurityMap().get(securityInfo.getApiKey());
@@ -163,7 +155,6 @@ public class RemoteApiFilter extends OncePerRequestFilter {
         logger.info("请求地址[{}],鉴权信息:token=[{}]", securityInfo.getRequestUri(), securityInfo.getAuthorization());
         logger.info("请求地址[{}],鉴权信息:characterEncoding=[{}]", securityInfo.getRequestUri(), request.getCharacterEncoding());
 
-
         //校验签名结果是否正确
         boolean verifyResult = MD5Utils.verify(signStr, securityInfo.getAuthorization(), secureKey, request.getCharacterEncoding());
         if (verifyResult) {
@@ -172,6 +163,16 @@ public class RemoteApiFilter extends OncePerRequestFilter {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             return;
         }
+    }
+
+    private String getRedisKey(HttpServletRequest request) {
+        StringBuffer sb = new StringBuffer();
+        sb.append(request.getRequestURI());
+        sb.append("|");
+        sb.append(request.getAttribute(RemoteReqConstants.MESSAGE_ID));
+        sb.append("|");
+        sb.append(request.getAttribute(RemoteReqConstants.TIMESTAMP));
+        return sb.toString();
     }
 
 }
