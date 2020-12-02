@@ -29,18 +29,31 @@
             <groupId>com.line.base</groupId>
             <artifactId>web</artifactId>
             <version>1.0.RELEASE</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>com.line.common</groupId>
+                    <artifactId>cache</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.line.base</groupId>
             <artifactId>datasource</artifactId>
             <version>1.0.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>com.line.common</groupId>
+            <artifactId>db</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.line.common</groupId>-->
-<!--            <artifactId>cache</artifactId>-->
-<!--            <version>1.0.RELEASE</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.line.common</groupId>-->
+        <!--            <artifactId>cache</artifactId>-->
+        <!--            <version>1.0.RELEASE</version>-->
+        <!--        </dependency>-->
+
 
         <!--        <dependency>-->
         <!--            <groupId>io.springfox</groupId>-->
@@ -51,8 +64,6 @@
         <!--            <groupId>io.springfox</groupId>-->
         <!--            <artifactId>springfox-swagger-ui</artifactId>-->
         <!--        </dependency>-->
-
-
 
 
     </dependencies>
@@ -71,6 +82,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

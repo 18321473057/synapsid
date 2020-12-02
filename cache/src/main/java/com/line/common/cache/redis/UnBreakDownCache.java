@@ -115,7 +115,6 @@ public abstract class UnBreakDownCache<V> implements ITTLCache<String, V>, Initi
         cacheStorage.set(getKey(key), new NullObject(), timeOut);
     }
 
-    ;
 
 
     //对象销毁, 删除cacheManage 中注册的缓存类信息

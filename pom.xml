@@ -16,6 +16,7 @@
         <module>datasource</module>
         <module>cache</module>
         <module>utils</module>
+        <module>db</module>
     </modules>
 
     <name>synapsid</name>

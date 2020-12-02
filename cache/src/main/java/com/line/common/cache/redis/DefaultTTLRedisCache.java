@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.util.StringUtils;
 
@@ -113,15 +114,16 @@ public abstract class DefaultTTLRedisCache<V> implements ITTLCache<String, V>, I
         cacheStorage.set(getKey(key), new NullObject(), timeOut);
     }
 
-    ;
 
 
     //对象销毁, 删除cacheManage 中注册的缓存类信息
+    @Autowired
     public void destroy() throws Exception {
         CacheManager.getInstance().unRegisterCache(getUUID());
     }
 
     //对象创建, cacheManage中注册本缓存类信息
+    @Autowired
     public void afterPropertiesSet() throws Exception {
         CacheManager.getInstance().registerCache(this);
     }

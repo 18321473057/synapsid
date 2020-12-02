@@ -7,7 +7,7 @@ spring:
   application:
     name: synapsid-test
   redis:
-    enable: true
+    enable: false
     pool:
       maxIdle: -1  #  最大空闲数
       minIdle: 10
@@ -23,6 +23,27 @@ spring:
       port: 6379
       database: 0
       password: line
+
+  #配置数据库h2的参数
+  datasource:
+    url: jdbc:h2:file:./dbh2/dbc2m;AUTO_SERVER=TRUE
+    driverClassName: org.h2.Driver
+    schema: classpath:db/schema.sql
+    #    data: classpath:db/data.sql
+    platform: h2
+    username: root
+    password: 123456
+    #在浏览器中开启控制台
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
 id:  #雪花算法配置
   generate:
@@ -45,10 +66,10 @@ line:
         securityMap:
           lineApiKey: $~@#oOm!2~<?
 
-# 动态数据源 配置
+  # 动态数据源 配置
   dynamic:
     datasource:
-      enable: true
+      enable: false  # 关闭mysql 连接配置,平时还是用h2方便点
       defaultDatasourceName: master
       datasourceList:
         - name: master
@@ -77,7 +98,8 @@ line:
           testOnReturn: false
           poolPreparedStatements: true
           maxOpenPreparedStatements: 20
-# mybatis 配置
+
+  # mybatis 配置
   mybatis:
     enable: true
 #mybatis:

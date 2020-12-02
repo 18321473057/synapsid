@@ -8,6 +8,7 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,8 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @EnableConfigurationProperties({RedisConfigProperties.class, RedisPoolProperties.class})
+@ConditionalOnProperty(prefix = "spring.redis", name = "enable")
+
 public class RedisBaseAutoConfiguration {
 
     @Autowired
