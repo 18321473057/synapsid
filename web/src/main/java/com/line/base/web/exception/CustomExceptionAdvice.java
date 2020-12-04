@@ -1,7 +1,7 @@
 package com.line.base.web.exception;
 
 import com.line.base.web.constans.RemoteReqConstants;
-import com.line.base.web.response.AjaxResponseVo;
+import com.line.base.web.response.AjaxResponseDto;
 import com.line.base.web.response.RemoteResponseDto;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,7 +27,7 @@ public class CustomExceptionAdvice {
         if (exception instanceof BusinessException) {
             //本地业务异常,返回状态500,以及异常信息;
             BusinessException bException = (BusinessException) exception;
-            return StringUtils.isEmpty(bException.getCode()) ? AjaxResponseVo.error(bException.getMessage()) : AjaxResponseVo.error(bException.getCode(), bException.getMessage());
+            return StringUtils.isEmpty(bException.getCode()) ? AjaxResponseDto.error(bException.getMessage()) : AjaxResponseDto.error(bException.getCode(), bException.getMessage());
         } else if (exception instanceof RemoteBusinessException) {
             //这里处理远程调用异常
             RemoteBusinessException rException = (RemoteBusinessException) exception;

@@ -17,7 +17,7 @@ public class BasicResponse<T> {
     //返回信息
     protected String msg;
 
-    public static <R extends BasicResponse> R getScuuess(Class<R> cr) {
+    protected static <R extends BasicResponse> R getScuuess(Class<R> cr) {
         try {
             R r = cr.newInstance();
             r.setSuccess(true);
@@ -32,7 +32,7 @@ public class BasicResponse<T> {
     }
 
 
-    public static <R extends BasicResponse> R getError(Class<R> cr) {
+    protected static <R extends BasicResponse> R getError(Class<R> cr) {
         try {
             R r = cr.newInstance();
             r.setSuccess(false);

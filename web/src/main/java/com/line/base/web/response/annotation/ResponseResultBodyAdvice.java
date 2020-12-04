@@ -7,9 +7,9 @@ import com.github.pagehelper.PageInfo;
 import com.line.base.web.constans.RemoteReqConstants;
 import com.line.base.web.exception.BusinessException;
 import com.line.base.web.request.annotation.RemoteResponse;
-import com.line.base.web.response.AjaxResponseVo;
+import com.line.base.web.response.AjaxResponseDto;
 import com.line.base.web.response.BasicResponse;
-import com.line.base.web.response.PageResponseVo;
+import com.line.base.web.response.PageResponseDto;
 import com.line.base.web.response.RemoteResponseDto;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -65,7 +65,7 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // 防止重复包裹的问题出现
-        if (body instanceof BasicResponse || body instanceof AjaxResponseVo || body instanceof PageResponseVo || body instanceof RemoteResponseDto) {
+        if (body instanceof BasicResponse || body instanceof AjaxResponseDto || body instanceof PageResponseDto || body instanceof RemoteResponseDto) {
             return body;
         }
 
@@ -95,10 +95,10 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
     private Object disposePageAnnotation(Object body) {
         //PageResponse 不会返回String , 不需要单独处理;
         if (body instanceof Page) {
-            return PageResponseVo.success((Page) body);
+            return PageResponseDto.success((Page) body);
         }
         if (body instanceof PageInfo) {
-            return PageResponseVo.success((PageInfo) body);
+            return PageResponseDto.success((PageInfo) body);
         }
         throw new BusinessException("使用注解PageResponse,染回的对象必须属于PageHelper中[Page,PageInfo]的一员");
     }
@@ -112,12 +112,12 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
         if (body instanceof String) {
             ObjectMapper om = new ObjectMapper();
             try {
-                return om.writeValueAsString(ajaxAnnotation.success() ? AjaxResponseVo.success(body) : AjaxResponseVo.error(body));
+                return om.writeValueAsString(ajaxAnnotation.success() ? AjaxResponseDto.success(body) : AjaxResponseDto.error(body));
             } catch (JsonProcessingException e) {
                 throw new BusinessException("ObjectMapper.writeValueAsString();统一处理返回对象中,自定义转换失败!e={}", e.getMessage());
             }
         }
-        return ajaxAnnotation.success() ? AjaxResponseVo.success(body) : AjaxResponseVo.error(body);
+        return ajaxAnnotation.success() ? AjaxResponseDto.success(body) : AjaxResponseDto.error(body);
     }
 
 
