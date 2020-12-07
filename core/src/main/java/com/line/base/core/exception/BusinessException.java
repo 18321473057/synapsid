@@ -1,8 +1,4 @@
-package com.line.base.web.exception;
-
-import com.line.base.web.response.RemoteErrorItemDto;
-
-import java.util.List;
+package com.line.base.core.exception;
 
 /**
  * @Author: yangcs

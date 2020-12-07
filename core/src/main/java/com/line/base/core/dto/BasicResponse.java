@@ -1,7 +1,7 @@
-package com.line.base.web.response;
+package com.line.base.core.dto;
 
 
-import com.line.base.web.exception.BusinessException;
+import com.line.base.core.exception.BusinessException;
 
 /**
  * @Author: yangcs

@@ -1,11 +1,11 @@
 # 启动服务相关配置
 server:
-  port: 8422
+  port: 9000
   tomcat:
     uri-encoding: UTF-8
 spring:
   application:
-    name: synapsid-test
+    name: bloomfilter-manage-test
   redis:
     enable: true
     pool:
@@ -44,13 +44,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-id:  #雪花算法配置
-  generate:
-    #    --workerId=0 --datacenterid=0  项目启动是需要制定工作空间 和数据中心
-    workerId: ${worker.id:0}
-    datacenterId: ${datacenter.id:0}
-    enable: true
 
 line:
   web:

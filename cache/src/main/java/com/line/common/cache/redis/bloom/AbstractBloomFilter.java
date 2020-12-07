@@ -2,6 +2,9 @@ package com.line.common.cache.redis.bloom;
 
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,23 +16,17 @@ import java.util.List;
  * @Date: 2020/11/27 14:19
  * @Description: 布隆过滤器 基于redisson实现
  * bloom过滤器基础bitmaps,但因为存在hash冲突, bloom会错报(不存在的判断为 存在),但绝不会漏报(存在的判断为 不存在)
+ *
+ * 默认一个过滤器 过滤,十万元素,误差0.03
  */
 
 public abstract class AbstractBloomFilter<E> implements IBloomFilter<E>, InitializingBean {
 
-    //redisson 实例
-    @Autowired
-    private RedissonClient redisson;
-
-    //TODO  redisson的 bloom过滤器
+    //TODO  APP满23456
+    // bloom过滤器
     private RBloomFilter<E> bloomFilter;
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        bloomFilter = redisson.getBloomFilter(getUUID());
-        //初始化布隆过滤器：预计元素为100000000L,误差率为3%
-        bloomFilter.tryInit(100000000L, 0.03);
-    }
+    private static final Logger logger = LoggerFactory.getLogger(AbstractBloomFilter.class);
 
     /**
      * @param e 元素
@@ -75,7 +72,7 @@ public abstract class AbstractBloomFilter<E> implements IBloomFilter<E>, Initial
      */
     @Override
     public List<E> filterActive(E... es) {
-        List<E> eList = new ArrayList<>();
+        List<E> eList = new ArrayList();
         for (E e : es) {
             if (contains(e)) {
                 eList.add(e);
@@ -91,4 +88,19 @@ public abstract class AbstractBloomFilter<E> implements IBloomFilter<E>, Initial
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        //尝试到远程过滤器服务注册
+        logger.info(">>>>>>>> 尝试到远程过滤器服务注册");
+        BFInitParam bfInfo = getBfInfo();
+
+
+        //设置使用的过滤器
+        this.bloomFilter = null;
+        //注册当前布隆过滤器,防止重复配置
+//        BloomManager.getInstance().register();
+    }
+
+
+    public abstract BFInitParam getBfInfo();
 }

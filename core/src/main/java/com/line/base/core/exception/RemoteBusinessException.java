@@ -1,6 +1,6 @@
-package com.line.base.web.exception;
+package com.line.base.core.exception;
 
-import com.line.base.web.response.RemoteErrorItemDto;
+import com.line.base.core.dto.RemoteErrorItemDto;
 
 import java.util.List;
 

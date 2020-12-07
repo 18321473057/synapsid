@@ -1,7 +1,7 @@
-package com.line.base.web.response;
+package com.line.base.core.dto;
 
 
-import com.line.base.web.exception.RemoteBusinessException;
+import com.line.base.core.exception.RemoteBusinessException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -36,10 +36,10 @@ public class RemoteResponseDto<T> extends BasicResponse<T> {
     public static <T> RemoteResponseDto<T> error(RemoteBusinessException rException) {
         //code和msg覆盖; 没有就默认 500 /系统异常
         RemoteResponseDto response = getError(RemoteResponseDto.class);
-        if(StringUtils.isNotEmpty(rException.getMessageId())){
+        if (StringUtils.isNotEmpty(rException.getMessageId())) {
             response.setMessageId(rException.getMessageId());
         }
-        if(rException.getTimestamp() != 0){
+        if (rException.getTimestamp() != 0) {
             response.setTimestamp(rException.getTimestamp());
         }
         if (StringUtils.isNotEmpty(rException.getCode())) {

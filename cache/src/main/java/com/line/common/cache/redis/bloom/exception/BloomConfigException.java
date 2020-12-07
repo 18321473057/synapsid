@@ -1,4 +1,4 @@
-package com.line.common.cache.redis.bloom;
+package com.line.common.cache.redis.bloom.exception;
 
 import java.io.Serializable;
 

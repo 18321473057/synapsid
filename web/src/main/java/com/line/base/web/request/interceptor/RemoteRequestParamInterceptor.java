@@ -2,7 +2,7 @@ package com.line.base.web.request.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.line.base.web.constans.RemoteReqConstants;
-import com.line.base.web.exception.BusinessException;
+import com.line.base.core.exception.BusinessException;
 import com.line.base.web.request.RemoteRequestDto;
 import com.line.base.web.request.annotation.RemoteResponse;
 import org.springframework.http.HttpMethod;

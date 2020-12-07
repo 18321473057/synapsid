@@ -1,4 +1,4 @@
-package com.line.base.web.response;
+package com.line.base.core.dto;
 
 
 /**
