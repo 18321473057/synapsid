@@ -1,12 +1,12 @@
 package com.line.common.bloomfiltermanage.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.line.base.core.exception.BusinessException;
 import com.line.base.core.dto.AjaxResponseDto;
+import com.line.base.core.exception.BusinessException;
 import com.line.common.bloomfiltermanage.manage.BloomRegisterManager;
+import com.line.common.cache.redis.utils.BFNameUtils;
 import com.line.common.cache.redis.bloom.BFInitParam;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.RedissonBloomFilter;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -51,23 +51,24 @@ public class BloomFilterApiService {
 
     //TODO  过滤器注册要留痕,过滤器注册要留痕,过滤器注册要留痕,过滤器注册要留痕,过滤器注册要留痕,过滤器注册要留痕,
     public synchronized AjaxResponseDto<RBloomFilter> tryInitBloomFilter(BFInitParam param) {
-        if (StringUtils.isEmpty(param.getBfName()) || param.getElementSize() == 0 || param.getFalseProbability() == 0) {
+        if (StringUtils.isEmpty(param.getRedisUUID()) || param.getElementSize() == 0 || param.getFalseProbability() == 0) {
             logger.error(">>>>>>>> 初始化布隆过滤器失败,参数异常;param={}", JSONObject.toJSON(param));
             throw new BusinessException("初始化布隆过滤器失败,参数异常!");
         }
 
-        RBloomFilter<Object> bloomFilter = redissonClient.getBloomFilter(param.getBfName());
+        String bfname = BFNameUtils.getBfName(param.getRedisUUID());
+        RBloomFilter<Object> bloomFilter = redissonClient.getBloomFilter(bfname);
         //redis已经存在有效过滤器,且add过元素
         if (bloomFilter.isExists()) {
             //注册器中也存在,这尼玛就是来捣乱的,重复注册; 直接返回过滤器给他, 不再鸟他
             if (BloomRegisterManager.getInstance().isRegister(bloomFilter.getName())) {
-                logger.info(">>>>>>>> 初始化布隆过滤器bfName=[{}],已经存在有效过滤器.", param.getBfName());
+                logger.info(">>>>>>>> 初始化布隆过滤器bfName=[{}],已经存在有效过滤器.",bfname);
             } else {
                 //注册器中不存在, 注册下;
                 BloomRegisterManager.getInstance().register(bloomFilter);
                 //为什么redis有 但注册器中没有注册成功? 这里是异常行径! 打印这条日志就要 引起注意了;
                 //TODO  这里可以发送一份邮件
-                logger.error(">>>>>>>> 初始化布隆过滤器bfName=[{}], redis中存在,但是注册器中不存在.", param.getBfName());
+                logger.error(">>>>>>>> 初始化布隆过滤器bfName=[{}], redis中存在,但是注册器中不存在.",bfname);
             }
         } else {
             bloomFilter.delete();//(可以多次删除), 既然没有被真正的创建也没有add任何元素,那就删除可能存在的 config,使用全新的配置;
@@ -79,7 +80,7 @@ public class BloomFilterApiService {
             }
 
 
-            bloomFilter = redissonClient.getBloomFilter(param.getBfName());
+            bloomFilter = redissonClient.getBloomFilter(bfname);
             bloomFilter.tryInit(param.getElementSize(), param.getFalseProbability()); //创建{bfName}:config
 
             //TODO  此处可以添加  初始化布隆过滤器的逻辑
@@ -92,33 +93,12 @@ public class BloomFilterApiService {
             //TODO
             //TODO
             //TODO
-
             //注册过滤器
             BloomRegisterManager.getInstance().register(bloomFilter);
-            logger.info(">>>>>>>> 初始化布隆过滤器bfName=[{}],一路顺风,创建成功.", param.getBfName());
+            logger.info(">>>>>>>> 初始化布隆过滤器bfName=[{}],一路顺风,创建成功.", bfname);
         }
         return AjaxResponseDto.success(bloomFilter);
     }
-//
-//    /**
-//     * 尝试 获取过滤器
-//     * <p>
-//     * 优先从本地注册器中获取. 如果没有从redis中获取; 再没有就返回失败
-//     */
-//    public AjaxResponseDto<RBloomFilter> tryGetRBloomFilter(String bfName) {
-//        RBloomFilter bloomFilter = null;
-//        if (!BloomRegisterManager.getInstance().isRegister(bfName)) {
-//            bloomFilter = redissonClient.getBloomFilter(bfName);
-//            if (bloomFilter == null || !bloomFilter.isExists()) {
-//                throw new BusinessException("没有查询到名为[" + bfName + "]的过滤器");
-//            }
-//            //本地中没了 再注册进去;
-//            BloomRegisterManager.getInstance().register(bloomFilter);
-//        } else {
-//            bloomFilter = BloomRegisterManager.getInstance().getBloomFilter(bfName);
-//        }
-//        return AjaxResponseDto.success(bloomFilter);
-//    }
 
 
     /**
@@ -126,9 +106,24 @@ public class BloomFilterApiService {
      * <p>
      * 优先从本地注册器中获取. 如果没有从redis中获取; 再没有就返回失败
      */
-    public AjaxResponseDto<RedissonBloomFilter> tryGetRBloomFilter(String bfName) {
-        RedissonBloomFilter bloomFilter = (RedissonBloomFilter) redissonClient.getBloomFilter(bfName);
-        return AjaxResponseDto.success(bloomFilter);
+    public AjaxResponseDto<String> tryGetRBloomFilter(String redisUUID) {
+
+        if(StringUtils.isEmpty(redisUUID)){
+            throw new BusinessException("redisUUID is null!");
+        }
+        String bfName = BFNameUtils.getBfName(redisUUID);
+        RBloomFilter bloomFilter;
+        if (!BloomRegisterManager.getInstance().isRegister(bfName)) {
+            bloomFilter = redissonClient.getBloomFilter(bfName);
+            if (bloomFilter == null || !bloomFilter.isExists()) {
+                throw new BusinessException("没有查询到名为[" + bfName + "]的过滤器");
+            }
+            //本地中没了 再注册进去;
+            BloomRegisterManager.getInstance().register(bloomFilter);
+        } else {
+            bloomFilter = BloomRegisterManager.getInstance().getBloomFilter(bfName);
+        }
+        return AjaxResponseDto.success(bloomFilter.getName());
     }
 
 

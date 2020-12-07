@@ -3,16 +3,15 @@ package com.line.common.cache.redis;
 import com.line.common.cache.interf.CacheManager;
 import com.line.common.cache.interf.ITTLCache;
 import com.line.common.cache.interf.ITTLCacheProvider;
+import com.line.common.cache.redis.bloom.BloomFilterIniter;
 import com.line.common.cache.redis.constant.NullObject;
-import com.line.common.cache.redis.exception.KeyIsNotFoundException;
-import com.line.common.cache.redis.exception.ValueIsBlankException;
-import com.line.common.cache.redis.exception.ValueIsNullException;
 import com.line.common.cache.redis.storage.RedisCacheStorage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.data.redis.RedisConnectionFailureException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
@@ -22,12 +21,12 @@ import java.util.Map;
  * @Date: 2020/11/4 15:39
  * @Description: 本缓存接口使用布隆过滤器处理发生击穿的情况
  */
-public abstract class UnBreakDownCache<V> implements ITTLCache<String, V>, InitializingBean, DisposableBean {
+public abstract class DefaultBloomFilterCache<V> implements ITTLCache<String, V>, InitializingBean, DisposableBean {
 
     /**
      * 日志类
      */
-    private static final Log LOG = LogFactory.getLog(UnBreakDownCache.class);
+    private static final Log LOG = LogFactory.getLog(DefaultBloomFilterCache.class);
 
     //过期时间
     private int timeOut = 10 * 60;
@@ -42,62 +41,42 @@ public abstract class UnBreakDownCache<V> implements ITTLCache<String, V>, Initi
      */
     protected RedisCacheStorage<String, V> cacheStorage;
 
+    /**
+     * 布隆过滤器 初始化在
+     */
+    @Autowired
+    private BloomFilterIniter bloomFilterIniter;
+
+    protected RBloomFilter bloomFilter;
 
     /**
      * 获取数据
-     * 如果返回null就是真的没有数据，无需再去数据库再取
      *
      * @param key
-     * @return
+     * @return 如果返回null就是真的没有数据，无需再去数据库再取
      */
     public V get(String key) {
         if (StringUtils.isEmpty(key)) {
             LOG.warn("缓存[" + getUUID() + "]，key为空串，返回结果[null]");
-            //key存在，value为空串
+            return null;
+        }
+        if (!bloomFilter.contains(key)) {
+            LOG.warn("缓存[" + getUUID() + "]，布隆过滤器校验失败，返回结果[null]");
             return null;
         }
 
-        V value = null;
-        try {
-            value = cacheStorage.get(getKey(key));
-            //如果key不存在，或者key对应的value不存在的情况，说明是正好过期的时候导致的，再查一下
-            if (value == null) {
-                value = cacheProvider.get(key);
-                LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]过期，重新走数据库查询，返回结果[" + value + "]");
-                if (value == null) {
-                    this.setNullObject(key);
-                } else {
-                    cacheStorage.set(getKey(key), value, timeOut);
-                }
-            }
-        } catch (ValueIsBlankException e) {
-            LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]存在，value为空串，返回结果[null]");
-            //key存在，value为空串
-            return null;
-        } catch (ValueIsNullException ex) {
-            //key存在，value为null
-            LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]存在，value为null，返回结果[null]");
-            return null;
-        } catch (KeyIsNotFoundException ex1) {
-            //key不存在
+        V value  = cacheStorage.get(getKey(key));
+        //如果key不存在，或者key对应的value不存在的情况，说明是正好过期的时候导致的，再查一下
+        if (value == null) {
             value = cacheProvider.get(key);
-            LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]不存在，走数据库查询，返回结果[" + value + "]");
+            LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]过期，重新走数据库查询，返回结果[" + value + "]");
             if (value == null) {
+                //布隆过滤器 过滤失败!!! redis被击穿
                 this.setNullObject(key);
             } else {
+                //设置redis 缓存
                 cacheStorage.set(getKey(key), value, timeOut);
             }
-        } catch (RedisConnectionFailureException exx) {
-            //redis 连接出现异常
-            value = cacheProvider.get(key);
-            LOG.warn("redis连接出现异常，走数据库查询!");
-            LOG.error(exx);
-            return value;
-        } catch (Exception e) {
-            //其他异常
-            LOG.error(e);
-            value = cacheProvider.get(key);
-            return value;
         }
         return value;
     }
@@ -112,10 +91,12 @@ public abstract class UnBreakDownCache<V> implements ITTLCache<String, V>, Initi
      * 解决方案: 布隆过滤器拦截;
      */
     private void setNullObject(String key) {
+        //应该有限穿透,多余一定比例的穿透
+
         cacheStorage.set(getKey(key), new NullObject(), timeOut);
+        //TODO 追加日志 为什么会过滤失败?
+
     }
-
-
 
     //对象销毁, 删除cacheManage 中注册的缓存类信息
     public void destroy() throws Exception {
@@ -125,6 +106,8 @@ public abstract class UnBreakDownCache<V> implements ITTLCache<String, V>, Initi
     //对象创建, cacheManage中注册本缓存类信息
     public void afterPropertiesSet() throws Exception {
         CacheManager.getInstance().registerCache(this);
+        //注册布隆过滤器
+        bloomFilter = bloomFilterIniter.initBloomFilter(getUUID());
     }
 
 

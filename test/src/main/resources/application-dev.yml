@@ -51,8 +51,9 @@ id:  #雪花算法配置
     workerId: ${worker.id:0}
     datacenterId: ${datacenter.id:0}
     enable: true
-
 line:
+  bf:
+    enable: true
   web:
     context:
       enable: false

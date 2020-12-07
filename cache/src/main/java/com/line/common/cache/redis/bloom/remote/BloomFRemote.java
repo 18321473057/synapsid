@@ -22,7 +22,7 @@ public interface BloomFRemote {
      * 获取布隆过滤器接接口
      */
     @RequestMapping(value = "/api/bf/try/get", method = RequestMethod.GET)
-    AjaxResponseDto<RBloomFilter> getBloomFilter(@RequestParam("bfName") String bfName);
+    AjaxResponseDto<String> getBloomFilter(@RequestParam("redisUUID") String redisUUID);
 
 
 }

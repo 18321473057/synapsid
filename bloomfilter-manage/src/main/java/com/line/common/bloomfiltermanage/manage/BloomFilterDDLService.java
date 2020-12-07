@@ -6,6 +6,7 @@ import com.line.base.core.exception.BusinessException;
 import com.line.common.bloomfiltermanage.service.BloomFilterApiService;
 import com.line.common.bloomfiltermanage.service.IBloomFilterElementInitService;
 import com.line.common.cache.redis.bloom.BFInitParam;
+import com.line.common.cache.redis.utils.BFNameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RBloomFilter;
 import org.slf4j.Logger;
@@ -51,34 +52,32 @@ public class BloomFilterDDLService {
      * @Description 强制创建 布隆过滤器,如果过滤器已经存在 则删除 重建;
      */
     public boolean reCreate(BFInitParam param) {
-        if (StringUtils.isEmpty(param.getBfName()) || param.getElementSize() == 0 || param.getFalseProbability() == 0) {
+        if (StringUtils.isEmpty(param.getRedisUUID()) || param.getElementSize() == 0 || param.getFalseProbability() == 0) {
             logger.error(">>>>>>>> 初始化布隆过滤器失败,参数异常;param={}", JSONObject.toJSON(param));
             throw new BusinessException("初始化布隆过滤器失败,参数异常;");
         }
 
+        String bfName = BFNameUtils.getBfName(param.getRedisUUID());
+
         try {
             //强制重建,不管有没有, 都先删了再说
-            delt(param.getBfName());
+            delt(bfName);
 
             //构建过滤器
             AjaxResponseDto<RBloomFilter> ajaxResponseDto = bloomFilterApiService.tryInitBloomFilter(param);
             if (!ajaxResponseDto.getSuccess()) {
-                throw new BusinessException("创建名为[" + param.getBfName() + "]的过滤器失败!");
+                throw new BusinessException("创建名为[" +bfName + "]的过滤器失败!");
             }
-
             //选择初始化方式,  初始化过滤器数据
             selectInitElement(ajaxResponseDto.getObj(), param);
-
-
         } catch (Exception e) {
             //删除重建 应该具有事务性,但这里没有事务; 只能邮件提醒开发者亲自去查看
             //TODO  邮件警告
             //创建失败 删除可能遗留下的数据
             logger.error(">>>>>>>> 强制创建布隆过滤器失败,e={}", e);
-            delt(param.getBfName());
+            delt(bfName);
             return false;
         }
-
         return true;
     }
 
@@ -90,7 +89,7 @@ public class BloomFilterDDLService {
         } else if (param.getElementInitType() == 2) {
             //sql类型
             long count = bloomFilterElementInitService.initElementBySql(bloomFilter, param.getQuerySql());
-            logger.info(">>>>>>>> 初始化名为[{}]的过滤器,初始化元素数量 count=[{}]", param.getBfName(), count);
+            logger.info(">>>>>>>> 初始化名为[{}]的过滤器,初始化元素数量 count=[{}]", BFNameUtils.getBfName(param.getRedisUUID()), count);
         } else {
             throw new BusinessException("不支持的初始化元素 方式!!!!");
         }

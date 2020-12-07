@@ -45,8 +45,8 @@ public class BloomFilterApiController {
      */
     @GetMapping("/try/get")
     @ResponseBody
-    public AjaxResponseDto<RedissonBloomFilter> tryGetRBloomFilter(String bfName) {
-        return bloomFilterIniter.tryGetRBloomFilter(bfName);
+    public AjaxResponseDto<String> tryGetRBloomFilter(String redisUUID) {
+        return bloomFilterIniter.tryGetRBloomFilter(redisUUID);
     }
 
 }

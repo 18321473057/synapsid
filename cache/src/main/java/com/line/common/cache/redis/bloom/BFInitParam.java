@@ -6,8 +6,9 @@ package com.line.common.cache.redis.bloom;
  * @Description: 布隆过滤器 初始化参数类
  */
 public class BFInitParam {
-    //过滤器Id
-    private String bfName;
+
+    //一个redis服务类,对应一个过滤器
+    private String redisUUID;
 
     //元素个数
     private long elementSize;
@@ -50,12 +51,13 @@ public class BFInitParam {
         this.falseProbability = falseProbability;
     }
 
-    public String getBfName() {
-        return bfName;
+
+    public String getRedisUUID() {
+        return redisUUID;
     }
 
-    public void setBfName(String bfName) {
-        this.bfName = bfName;
+    public void setRedisUUID(String redisUUID) {
+        this.redisUUID = redisUUID;
     }
 
     public String getTableName() {
