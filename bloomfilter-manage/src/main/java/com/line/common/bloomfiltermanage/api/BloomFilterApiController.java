@@ -1,9 +1,7 @@
 package com.line.common.bloomfiltermanage.api;
 
 import com.line.base.core.dto.AjaxResponseDto;
-import com.line.common.bloomfiltermanage.service.BloomFilterApiService;
-import org.redisson.RedissonBloomFilter;
-import org.redisson.api.RBloomFilter;
+import com.line.common.bloomfiltermanage.service.impl.BloomFilterApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

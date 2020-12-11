@@ -1,14 +1,12 @@
 package com.line.common.bloomfiltermanage.controller;
 
 import com.line.base.web.response.annotation.AjaxResponse;
-import com.line.common.cache.redis.bloom.BFInitParam;
 import com.line.common.bloomfiltermanage.manage.BloomFilterDDLService;
+import com.line.common.cache.redis.bloom.BFInitParam;
+import com.line.common.cache.redis.utils.BFNameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author: yangcs
@@ -28,14 +26,13 @@ DDLBloomFilterController {
 
 
     /**
-     * @param bfName 过滤器名称
+     * @param redisUUID redis uuid
      * @return -1:没有查询到这个过滤器; 0:删除失败; >0 :删除的个数
      */
-    @PostMapping("/del")
+    @DeleteMapping("/del")
     @AjaxResponse
-    public Integer delt(@RequestParam String bfName) {
-        bloomFilterDDLService.delt(bfName);
-        return 1;
+    public Integer delt(@RequestParam String redisUUID) {
+        return bloomFilterDDLService.delt(BFNameUtils.getBfName(redisUUID));
     }
 
     /**

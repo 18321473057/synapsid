@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.line.common.bloomfiltermanage.dao.BloomFilterLogMapper">
+
+    <update id="update2PastDue">
+        UPDATE t_bloomfilter_log
+        SET
+            use_type = 0,
+            modify_time = now(),
+            remark = #{remark}
+        WHERE bf_name = #{bfName} and operation_type ='D' and use_type = 1
+    </update>
+
+</mapper>
