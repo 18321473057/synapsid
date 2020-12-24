@@ -2,8 +2,12 @@ package com.line.common.test.image;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.net.URL;
 
 /**
  * Created by zj on 2018/10/18.
@@ -57,6 +61,24 @@ public class ImageReorganization {
             g.drawString("$250", 10, 235 + 81 + 20+60);
             g.setColor(Color.BLACK);
             g.drawString("$250", 40, 235 + 81 + 20+60);
+
+
+
+            //头像图片地址
+            String url = "D:\\CCC.jpg";
+            BufferedImage avatarImage = ImageIO.read(new File(url));
+            int width = 80;
+            //把图片切成一个圓
+            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            //留一个像素的空白区域，这个很重要，画圆的时候把这个覆盖
+            int border = 1;
+            //图片是一个圆型
+            Ellipse2D.Double shape = new Ellipse2D.Double(border, border, width - border * 2, width - border * 2);
+            //需要保留的区域
+            g.setClip(shape);
+            //二维码放在哪里
+            g.drawImage(avatarImage, 10, 10, width - border * 2, width - border * 2, null);
+
 
             g.dispose();
             ImageIO.write(background, "jpg", new File(outPutPath));
