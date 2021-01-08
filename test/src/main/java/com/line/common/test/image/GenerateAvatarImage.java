@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -17,7 +16,7 @@ public class GenerateAvatarImage {
 
     public static void main(String[] args) throws IOException {
         String url = "D:\\CCC.jpg";
-        BufferedImage avatarImage = ImageIO.read(new File(url));
+        BufferedImage avatarImage = ImageIO.read(new URL(url));
         int width = 120;
         // 透明底的图片
         BufferedImage formatAvatarImage = new BufferedImage(width, width, BufferedImage.TYPE_4BYTE_ABGR);
@@ -34,19 +33,19 @@ public class GenerateAvatarImage {
         graphics.dispose();
         //在圆图外面再画一个圆
         //新创建一个graphics，这样画的圆不会有锯齿
-//        graphics = formatAvatarImage.createGraphics();
-//        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-//        int border2 = 3;
-//        //画笔是4.5个像素，BasicStroke的使用可以查看下面的参考文档
-//        //使画笔时基本会像外延伸一定像素，具体可以自己使用的时候测试
-//        Stroke s = new BasicStroke(4.5F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-//        graphics.setStroke(s);
-//        graphics.setColor(Color.WHITE);
-//        graphics.drawOval(border2, border2, width - border2 * 2, width - border2 * 2);
-//        graphics.dispose();
-//        try (OutputStream os = new FileOutputStream("D:\\temp-avatar.png")) {
-//            ImageIO.write(formatAvatarImage, "PNG", os);
-//        }
+        graphics = formatAvatarImage.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        int border2 = 3;
+        //画笔是4.5个像素，BasicStroke的使用可以查看下面的参考文档
+        //使画笔时基本会像外延伸一定像素，具体可以自己使用的时候测试
+        Stroke s = new BasicStroke(4.5F, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+        graphics.setStroke(s);
+        graphics.setColor(Color.WHITE);
+        graphics.drawOval(border2, border2, width - border2 * 2, width - border2 * 2);
+        graphics.dispose();
+        try (OutputStream os = new FileOutputStream("D:\\temp-avatar.png")) {
+            ImageIO.write(formatAvatarImage, "PNG", os);
+        }
         url = "https://img-blog.csdn.net/20180529213113521";
         BufferedImage srcImg = ImageIO.read(new URL(url));
         //scrImg加载完之后没有任何颜色

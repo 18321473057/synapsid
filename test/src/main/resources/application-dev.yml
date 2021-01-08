@@ -105,3 +105,7 @@ line:
     enable: true
 #mybatis:
 #  mapper-locations: classpath*:com/line/common/test/mybatis/dao/*xml
+logging:
+  level:
+    root: debug
+  file: D://logger.log

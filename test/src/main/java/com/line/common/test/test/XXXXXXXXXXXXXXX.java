@@ -1,5 +1,7 @@
 package com.line.common.test.test;
 
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -31,6 +33,8 @@ public class XXXXXXXXXXXXXXX {
      */
     public static boolean merge(String[] pics, String type, String dst_pic) {
 
+
+        new ThreadPoolTaskExecutor();
         int len = pics.length;
         if (len < 1) {
             System.out.println("pics len < 1");

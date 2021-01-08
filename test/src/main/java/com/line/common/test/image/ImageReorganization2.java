@@ -12,7 +12,7 @@ import java.net.URL;
 /**
  * Created by zj on 2018/10/18.
  */
-public class ImageReorganization {
+public class ImageReorganization2 {
 
     public static void main(String[] args) {
         String backgroundPath = "D:\\11.png";
@@ -74,9 +74,9 @@ public class ImageReorganization {
             int border = 1;
             //图片是一个圆型
             Ellipse2D.Double shape = new Ellipse2D.Double(border, border, width - border * 2, width - border * 2);
+//            g.fillRoundRect(10, 10, width - border * 2, width - border * 2, 50, 50);
             //需要保留的区域
             g.setClip(shape);
-            g.fillRoundRect(0, 0, width, width, 50, 50);
             //二维码放在哪里
             g.drawImage(avatarImage, 10, 10, width - border * 2, width - border * 2, null);
 
