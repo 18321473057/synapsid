@@ -3,12 +3,12 @@ package com.line.common.cache.redis;
 import com.line.common.cache.interf.CacheManager;
 import com.line.common.cache.interf.ITTLCache;
 import com.line.common.cache.interf.ITTLCacheProvider;
-import com.line.common.cache.redis.bloom.BloomFilterIniter;
+//import com.line.common.cache.redis.bloom.BloomFilterIniter;
 import com.line.common.cache.redis.constant.NullObject;
 import com.line.common.cache.redis.storage.RedisCacheStorage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.redisson.api.RBloomFilter;
+//import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +45,9 @@ public abstract class DefaultBloomFilterCache<V> implements ITTLCache<String, V>
      * 布隆过滤器 初始化在
      */
     @Autowired
-    private BloomFilterIniter bloomFilterIniter;
+//    private BloomFilterIniter bloomFilterIniter;
 
-    protected RBloomFilter bloomFilter;
+//    protected RBloomFilter bloomFilter;
 
     /**
      * 获取数据
@@ -60,10 +60,10 @@ public abstract class DefaultBloomFilterCache<V> implements ITTLCache<String, V>
             LOG.warn("缓存[" + getUUID() + "]，key为空串，返回结果[null]");
             return null;
         }
-        if (!bloomFilter.contains(key)) {
-            LOG.warn("缓存[" + getUUID() + "]，布隆过滤器校验失败，返回结果[null]");
-            return null;
-        }
+//        if (!bloomFilter.contains(key)) {
+//            LOG.warn("缓存[" + getUUID() + "]，布隆过滤器校验失败，返回结果[null]");
+//            return null;
+//        }
 
         V value  = cacheStorage.get(getKey(key));
         //如果key不存在，或者key对应的value不存在的情况，说明是正好过期的时候导致的，再查一下
@@ -107,7 +107,7 @@ public abstract class DefaultBloomFilterCache<V> implements ITTLCache<String, V>
     public void afterPropertiesSet() throws Exception {
         CacheManager.getInstance().registerCache(this);
         //注册布隆过滤器
-        bloomFilter = bloomFilterIniter.initBloomFilter(getUUID());
+//        bloomFilter = bloomFilterIniter.initBloomFilter(getUUID());
     }
 
 

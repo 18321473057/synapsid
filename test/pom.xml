@@ -67,6 +67,31 @@
         <!--        </dependency>-->
 
 
+        <dependency>
+            <groupId>com.line.common</groupId>
+            <artifactId>line-starter-maile</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>com.line.common</groupId>
+            <artifactId>line-starter-maile</artifactId>
+            <version>1.0.0.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

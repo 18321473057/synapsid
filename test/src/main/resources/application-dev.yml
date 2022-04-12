@@ -36,7 +36,7 @@ spring:
     #在浏览器中开启控制台
   h2:
     console:
-      enabled: true
+      enabled: false
       path: /h2-console
       settings:
         web-allow-others: true
@@ -66,11 +66,19 @@ line:
       security:
         securityMap:
           lineApiKey: $~@#oOm!2~<?
+  mail:
+    mailNo: 377704204@qq.com
+    nickName: yangcs
+
+  dao:
+    base:
+      enable: true
+
 
   # 动态数据源 配置
   dynamic:
     datasource:
-      enable: false  # 关闭mysql 连接配置,平时还是用h2方便点
+      enable: true  # 关闭mysql 连接配置,平时还是用h2方便点
       defaultDatasourceName: master
       datasourceList:
         - name: master

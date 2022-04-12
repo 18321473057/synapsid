@@ -7,10 +7,11 @@
         <artifactId>synapsid</artifactId>
         <version>1.0.RELEASE</version>
     </parent>
-    <groupId>com.line.common</groupId>
 
+    <groupId>com.line.common</groupId>
     <artifactId>cache</artifactId>
     <version>1.0.RELEASE</version>
+
     <name>cache</name>
     <description>Demo project for Spring Boot</description>
 
@@ -38,12 +39,12 @@
             <version>2.9.2</version>
         </dependency>
 
-        <!-- redisson -->
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.8.2</version>
-        </dependency>
+<!--        &lt;!&ndash; redisson &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.redisson</groupId>-->
+<!--            <artifactId>redisson-spring-boot-starter</artifactId>-->
+<!--            <version>3.8.2</version>-->
+<!--        </dependency>-->
 
 
 
@@ -64,6 +65,10 @@
         </dependency>
 
 
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-hystrix</artifactId>
+        </dependency>
 
     </dependencies>
 

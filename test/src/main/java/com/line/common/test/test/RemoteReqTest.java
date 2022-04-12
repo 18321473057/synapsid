@@ -102,7 +102,7 @@ public class RemoteReqTest {
         map.put("acctCode", acctCode);
         String paramString = MapUtils.createLinkString(map);
         //指定的秘钥
-        String securityKey = "&A^3*c#V/>$7{]0"+"s";
+        String securityKey = "&A^3*c#V/>$7{]0";
 //        String securityKey = "cr123";
         //请求uri
         //组装要加密的字符串

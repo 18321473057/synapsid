@@ -54,7 +54,7 @@ public class LoginConfiguration {
 
 
     /**
-     * 参数签名校验过滤器实例
+     * 参数签名校验过滤器实例12
      */
     @Bean
     public FilterRegistrationBean aramsVerifyFilterRegistration() {

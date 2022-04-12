@@ -1,8 +1,8 @@
 package com.line.common.test.cache;
 
-import com.line.common.cache.redis.bloom.BloomManager;
+//import com.line.common.cache.redis.bloom.BloomManager;
 import com.line.common.cache.redis.utils.BFNameUtils;
-import org.redisson.api.RBloomFilter;
+//import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,15 +23,15 @@ public class CacheController {
     @Autowired
     private UserCache userCache;
     @Autowired
-    private BloomFilterTestCache bloomFilterTestCache;
+//    private BloomFilterTestCache bloomFilterTestCache;
 
-    @RequestMapping("/test/1")
-    public Integer selectOneByTKMapper() {
-        RBloomFilter filter = BloomManager.getInstance().getBloomFilter(BFNameUtils.getBfName(BloomFilterTestCache.UUID));
-        System.out.println(filter.contains("2"));
-        System.out.println(filter.contains("33"));
-        return (Integer) redisTemplate.opsForValue().get("age");
-    }
+//    @RequestMapping("/test/1")
+//    public Integer selectOneByTKMapper() {
+//        RBloomFilter filter = BloomManager.getInstance().getBloomFilter(BFNameUtils.getBfName(BloomFilterTestCache.UUID));
+//        System.out.println(filter.contains("2"));
+//        System.out.println(filter.contains("33"));
+//        return (Integer) redisTemplate.opsForValue().get("age");
+//    }
 
     //
     @RequestMapping("/v1/usercache")

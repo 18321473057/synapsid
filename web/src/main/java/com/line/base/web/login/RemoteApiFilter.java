@@ -9,8 +9,8 @@ import com.line.base.web.request.RemoteRequestDto;
 import com.line.common.utils.bean.MapUtils;
 import com.line.common.utils.encryption.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
+//import org.redisson.api.RLock;
+//import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +62,8 @@ public class RemoteApiFilter extends OncePerRequestFilter {
 
     @Autowired
     private RemoteSecurityProperties properties;
-    @Autowired
-    private RedissonClient redisson;
+//    @Autowired
+//    private RedissonClient redisson;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
@@ -131,16 +131,16 @@ public class RemoteApiFilter extends OncePerRequestFilter {
         }
 
         //  redisson锁校验是否重复提交
-        RLock lock = redisson.getLock(getRedisKey(request));
-        if (lock.isLocked()) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            logger.error("重复请求,请求信息[{}]", JSONObject.toJSON(securityInfo));
-        }
-        try {
-            lock.tryLock(1, requestTimeDelaySeconds, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            logger.error(" 加锁失败,请求信息[{}]", JSONObject.toJSON(securityInfo));
-        }
+//        RLock lock = redisson.getLock(getRedisKey(request));
+//        if (lock.isLocked()) {
+//            response.setStatus(HttpStatus.FORBIDDEN.value());
+//            logger.error("重复请求,请求信息[{}]", JSONObject.toJSON(securityInfo));
+//        }
+//        try {
+//            lock.tryLock(1, requestTimeDelaySeconds, TimeUnit.SECONDS);
+//        } catch (InterruptedException e) {
+//            logger.error(" 加锁失败,请求信息[{}]", JSONObject.toJSON(securityInfo));
+//        }
 
         //获取秘钥
         String secureKey = properties.getSecurityMap().get(securityInfo.getApiKey());

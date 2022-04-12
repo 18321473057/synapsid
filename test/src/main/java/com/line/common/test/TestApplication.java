@@ -1,10 +1,12 @@
 package com.line.common.test;
 
+import com.line.common.linestartermaile.service.IMailSendService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import tk.mybatis.spring.annotation.MapperScan;
@@ -20,6 +22,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableFeignClients(basePackages = "com.line")
 public class TestApplication {
     public static void main(String[] args) {
-        SpringApplication.run(TestApplication.class, args);
+        ConfigurableApplicationContext run = SpringApplication.run(TestApplication.class, args);
+        run.getBean(IMailSendService.class).send("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
     }
 }
