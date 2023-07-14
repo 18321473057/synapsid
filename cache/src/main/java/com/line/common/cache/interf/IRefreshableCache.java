@@ -4,7 +4,6 @@ package com.line.common.cache.interf;
 /**
  * @param <K>
  * @param <V>
- * @author 陈宇霖
  * @ClassName RefreshableCache
  * @Description 允许刷新缓存接口
  * @date 2017年08月07日08:10:54

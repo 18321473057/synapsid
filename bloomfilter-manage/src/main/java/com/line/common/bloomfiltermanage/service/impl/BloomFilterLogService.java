@@ -98,7 +98,7 @@ public class BloomFilterLogService implements IBloomFilterLogService {
                 "        SET" +
                 "            use_type = 0, " +
                 "            modify_time = now()," +
-                "            remark = '" + updatePO.getRemark()  +
+                "            remark = '" + updatePO.getRemark() +
                 "'        WHERE bf_name = '" + updatePO.getBfName() + "'  and use_type = 1";
         template.execute(uptSql);
     }

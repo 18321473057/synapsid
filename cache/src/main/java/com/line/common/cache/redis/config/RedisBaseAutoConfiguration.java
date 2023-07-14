@@ -3,9 +3,6 @@ package com.line.common.cache.redis.config;
 
 import com.line.common.cache.redis.serializer.FastJsonRedisSerializer;
 import com.line.common.cache.redis.storage.RedisCacheStorage;
-//import org.redisson.Redisson;
-//import org.redisson.api.RedissonClient;
-//import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,6 +18,10 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
+//import org.redisson.Redisson;
+//import org.redisson.api.RedissonClient;
+//import org.redisson.config.Config;
+
 /**
  * @Author: yangcs
  * @Date: 2020/11/2 17:13
@@ -28,7 +29,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @EnableConfigurationProperties({RedisConfigProperties.class, RedisPoolProperties.class})
-@ConditionalOnProperty(prefix = "spring.redis", name = "enable")
+@ConditionalOnProperty(prefix = "spring.redis" , name = "enable")
 
 public class RedisBaseAutoConfiguration {
 

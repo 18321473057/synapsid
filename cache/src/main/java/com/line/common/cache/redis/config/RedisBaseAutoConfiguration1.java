@@ -23,7 +23,7 @@
 //* @Title AnotherRedisAutoConfiguration
 //* @Package com.hoau.aquarius.common.cfg
 //* @Description 第二个redis连接自动装配
-//* @author 陈宇霖
+//*
 //* @date 2018/1/24 13:58
 //* @version V1.0
 //*/
@@ -39,7 +39,7 @@
 //     * redis存储自动配置
 //     * @param redisTemplate
 //     * @return
-//     * @author 陈宇霖
+//     *
 //     * @date 2018年01月15日17:42:35
 //     */
 //    @Bean("secondRedisCacheStorage")
@@ -100,7 +100,7 @@
 //    /**
 //     * redis连接配置
 //     * @param factory
-//     * @author 陈宇霖
+//     *
 //     * @date 2018年01月15日17:38:55
 //     */
 //    private void secondRedisProperties(JedisConnectionFactory factory) {
@@ -115,7 +115,7 @@
 //    /**
 //     * redis连接池配置
 //     * @return
-//     * @author 陈宇霖
+//     *
 //     * @date 2018年01月15日17:35:24
 //     */
 //    private JedisPoolConfig jedisPoolConfig() {

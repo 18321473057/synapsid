@@ -15,32 +15,25 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
-
     public static final String DATE_SHORT_FORMAT = "yyyyMMdd";
     public static final String DATE_CH_FORMAT = "yyyy年MM月dd日";
-
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
     public static final String TIME_FORMAT = "HH:mm:ss";
-
     public static final String DAYTIME_START = "00:00:00.000";
     public static final String DAYTIME_END = "23:59:59.999";
-
     public static final String DC_DATE_FORMAT = "yyyy/MM/dd";
     public static final String DC_TIME_FORMAT = "yyyy/MM/dd HH:mm:ss";
-
     public static final String ZONED_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
-
     public static final String NUMBERDATEFORMAT = "yyyyMMddHHmmss";
+    private static final Logger logger = LoggerFactory.getLogger(DateUtils.class);
+    private static final String[] FORMATS = {"yyyy-MM-dd" , "yyyy-MM-dd HH:mm" ,
+            "yyyy-MM-dd HH:mm:ss" , "HH:mm" , "HH:mm:ss" , "HH:mm:ss.SSS" , "yyyy-MM" ,
+            "yyyy-MM-dd HH:mm:ss.SSS" , DC_DATE_FORMAT, DC_TIME_FORMAT};
 
     private DateUtils() {
     }
-
-    private static final String[] FORMATS = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm",
-            "yyyy-MM-dd HH:mm:ss", "HH:mm", "HH:mm:ss", "HH:mm:ss.SSS", "yyyy-MM",
-            "yyyy-MM-dd HH:mm:ss.SSS", DC_DATE_FORMAT, DC_TIME_FORMAT};
 
     public static Date convert(String str) {
         if (str != null && str.length() > 0) {
@@ -86,7 +79,6 @@ public class DateUtils {
      * @param ymd
      * @param hm
      * @return
-     * @author 高佳
      * @date 2015年8月19日
      * @update
      */
@@ -113,7 +105,6 @@ public class DateUtils {
      *
      * @param date
      * @return
-     * @author 高佳
      * @date 2015年8月19日
      * @update
      */
@@ -126,7 +117,6 @@ public class DateUtils {
      *
      * @param date
      * @return
-     * @author 高佳
      * @date 2015年8月19日
      * @update
      */
@@ -141,7 +131,6 @@ public class DateUtils {
      *
      * @param dateStr
      * @return
-     * @author 高佳
      * @date 2015年8月19日
      * @update
      */
@@ -499,7 +488,6 @@ public class DateUtils {
      *
      * @param dateStr yyyy-MM-dd'T'HH:mm:ssZ 	时间格式字符串
      * @return
-     * @author 陈宇霖
      * @date 2017年09月08日16:30:58
      */
     public static String getZonedDateTime(String dateStr) throws ParseException {
@@ -515,9 +503,8 @@ public class DateUtils {
      * 从yyyy-MM-dd'T'HH:mm:ssZ格式的时间中获取时区信息
      *
      * @param dateStr yyyy-MM-dd'T'HH:mm:ssZ 	时间格式字符串
+     * @return -12~12之间的数字
      * @throws ParseException
-     * @return    -12~12之间的数字
-     * @author 陈宇霖
      * @date 2017年09月07日19:41:31
      */
     public static Integer getTimeZone(String dateStr) throws ParseException {
@@ -526,7 +513,7 @@ public class DateUtils {
         String zoneFlag = dateStr.substring(19, 20);
         Integer zoneValue = Integer.parseInt(dateStr.substring(20, 22));
         if (zoneValue > 12 || zoneValue < -12) {
-            throw new ParseException("error ZoneValue!", zoneValue);
+            throw new ParseException("error ZoneValue!" , zoneValue);
         }
         return Integer.parseInt(zoneFlag + zoneValue);
     }
@@ -537,7 +524,6 @@ public class DateUtils {
      * @param dateStr   yyyy-MM-dd HH:mm:ss格式日期字符串
      * @param zoneValue -12~12时区
      * @return
-     * @author 陈宇霖
      * @date 2017年09月26日23:17:17
      */
     public static String revertGetTime(String dateStr, Integer zoneValue) {
@@ -549,7 +535,6 @@ public class DateUtils {
      *
      * @param dateStr
      * @return
-     * @author 陈宇霖
      * @date 2017年09月26日23:14:30
      */
     public static String revertGetZonedDateTime(String dateStr) {
@@ -562,7 +547,6 @@ public class DateUtils {
      *
      * @param zoneValue
      * @return
-     * @author 陈宇霖
      * @date 2017年09月26日22:58:21
      */
     public static String revertGetTimeZone(Integer zoneValue) {
@@ -588,9 +572,8 @@ public class DateUtils {
      * 获取 yyyy-MM-dd'T'HH:mm:ssZ 	时间格式字符串对应的unix时间戳
      *
      * @param dateStr yyyy-MM-dd'T'HH:mm:ssZ 	时间格式字符串
-     * @throws ParseException
      * @return unix时间戳
-     * @author 陈宇霖
+     * @throws ParseException
      * @date 2017年09月07日20:56:26
      */
     public static Long getTimeStamp(String dateStr) throws ParseException {

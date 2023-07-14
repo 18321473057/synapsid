@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
-import com.line.base.web.constans.RemoteReqConstants;
-import com.line.base.core.exception.BusinessException;
-import com.line.base.web.request.annotation.RemoteResponse;
 import com.line.base.core.dto.AjaxResponseDto;
 import com.line.base.core.dto.BasicResponse;
 import com.line.base.core.dto.RemoteResponseDto;
+import com.line.base.core.exception.BusinessException;
+import com.line.base.web.constans.RemoteReqConstants;
+import com.line.base.web.request.annotation.RemoteResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.http.MediaType;
@@ -113,7 +113,7 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
             try {
                 return om.writeValueAsString(ajaxAnnotation.success() ? AjaxResponseDto.success(body) : AjaxResponseDto.error(body));
             } catch (JsonProcessingException e) {
-                throw new BusinessException("ObjectMapper.writeValueAsString();统一处理返回对象中,自定义转换失败!e={}", e.getMessage());
+                throw new BusinessException("ObjectMapper.writeValueAsString();统一处理返回对象中,自定义转换失败!e={}" , e.getMessage());
             }
         }
         return ajaxAnnotation.success() ? AjaxResponseDto.success(body) : AjaxResponseDto.error(body);

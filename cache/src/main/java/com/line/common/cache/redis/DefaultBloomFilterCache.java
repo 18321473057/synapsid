@@ -3,18 +3,19 @@ package com.line.common.cache.redis;
 import com.line.common.cache.interf.CacheManager;
 import com.line.common.cache.interf.ITTLCache;
 import com.line.common.cache.interf.ITTLCacheProvider;
-//import com.line.common.cache.redis.bloom.BloomFilterIniter;
 import com.line.common.cache.redis.constant.NullObject;
 import com.line.common.cache.redis.storage.RedisCacheStorage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-//import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
+
+//import com.line.common.cache.redis.bloom.BloomFilterIniter;
+//import org.redisson.api.RBloomFilter;
 
 /**
  * @Author: yangcs
@@ -27,19 +28,16 @@ public abstract class DefaultBloomFilterCache<V> implements ITTLCache<String, V>
      * 日志类
      */
     private static final Log LOG = LogFactory.getLog(DefaultBloomFilterCache.class);
-
-    //过期时间
-    private int timeOut = 10 * 60;
-
     /**
      * 数据提供者
      */
     protected ITTLCacheProvider<V> cacheProvider;
-
     /**
      * 数据存储器
      */
     protected RedisCacheStorage<String, V> cacheStorage;
+    //过期时间
+    private int timeOut = 10 * 60;
 
     /**
      * 布隆过滤器 初始化在
@@ -65,7 +63,7 @@ public abstract class DefaultBloomFilterCache<V> implements ITTLCache<String, V>
 //            return null;
 //        }
 
-        V value  = cacheStorage.get(getKey(key));
+        V value = cacheStorage.get(getKey(key));
         //如果key不存在，或者key对应的value不存在的情况，说明是正好过期的时候导致的，再查一下
         if (value == null) {
             value = cacheProvider.get(key);

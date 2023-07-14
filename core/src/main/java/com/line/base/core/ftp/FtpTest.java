@@ -2,8 +2,6 @@ package com.line.base.core.ftp;
 
 import com.jcraft.jsch.JSchException;
 
-import java.io.File;
-
 /**
  * @Author: yangcs
  * @Date: 2022/4/12 10:10
@@ -22,6 +20,6 @@ public class FtpTest {
         client.connect();
 //        client.upload("/home/ftp/ycs/0412",new File("D:\\info.log"),"ycs_info.log");
 //        client.download("/home/ftp/ycs/0412","ycs_info.log","D:\\info111.log");
-        client.delete("/home/ftp/ycs/0412","ycs_info.log");
+        client.delete("/home/ftp/ycs/0412" , "ycs_info.log");
     }
 }

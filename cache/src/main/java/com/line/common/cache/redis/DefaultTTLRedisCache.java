@@ -28,19 +28,16 @@ public abstract class DefaultTTLRedisCache<V> implements ITTLCache<String, V>, I
      * 日志类
      */
     private static final Log LOG = LogFactory.getLog(DefaultTTLRedisCache.class);
-
-    //过期时间
-    private int timeOut = 10 * 60;
     /**
      * 数据提供者
      */
     protected ITTLCacheProvider<V> cacheProvider;
-
     /**
      * 数据存储器
      */
     protected RedisCacheStorage<String, V> cacheStorage;
-
+    //过期时间
+    private int timeOut = 10 * 60;
 
     /**
      * 获取数据
@@ -113,7 +110,6 @@ public abstract class DefaultTTLRedisCache<V> implements ITTLCache<String, V>, I
     private void setNullObject(String key) {
         cacheStorage.set(getKey(key), new NullObject(), timeOut);
     }
-
 
 
     //对象销毁, 删除cacheManage 中注册的缓存类信息

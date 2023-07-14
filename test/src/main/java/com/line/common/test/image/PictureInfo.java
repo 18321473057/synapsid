@@ -1,7 +1,6 @@
 package com.line.common.test.image;
 
 import java.awt.*;
-import java.util.Objects;
 
 /**
  * @Author: yangcs

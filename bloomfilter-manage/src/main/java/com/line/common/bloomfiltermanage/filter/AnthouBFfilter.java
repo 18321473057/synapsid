@@ -22,14 +22,13 @@ import java.util.List;
 @Component
 public class AnthouBFfilter extends OncePerRequestFilter {
 
+    AntPathMatcher antPathMatcher = new AntPathMatcher();
     /**
      * 排除校验的地址;
      * 内部系统间的调用(获取和尝试创建过滤器等功能 不做校验)
      * ddl操作 做简单的拦截密码校验
      */
-    private List<String> excludeUrlPatterns = new ArrayList(Arrays.asList("/api/**","/h2-console/**"));
-
-    AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private List<String> excludeUrlPatterns = new ArrayList(Arrays.asList("/api/**" , "/h2-console/**"));
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {

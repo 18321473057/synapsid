@@ -1,13 +1,14 @@
 package com.line.common.test.cache;
 
 //import com.line.common.cache.redis.bloom.BloomManager;
-import com.line.common.cache.redis.utils.BFNameUtils;
-//import org.redisson.api.RBloomFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+//import org.redisson.api.RBloomFilter;
 
 /**
  * @Author: yangcs
@@ -22,6 +23,7 @@ public class CacheController {
     private RedisTemplate redisTemplate;
     @Autowired
     private UserCache userCache;
+
     @Autowired
 //    private BloomFilterTestCache bloomFilterTestCache;
 

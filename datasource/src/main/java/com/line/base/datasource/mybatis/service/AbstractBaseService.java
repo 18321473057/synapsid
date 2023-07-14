@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author 刘德云
  * @version V1.0
  * @title: IDeleteService
  * @package com.hoau.leo.common.mapper.service

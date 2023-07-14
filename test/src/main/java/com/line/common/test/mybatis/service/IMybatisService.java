@@ -23,7 +23,8 @@ public interface IMybatisService {
     String selectAnyAll();
 
     //tkmapper 查询
-    TestPo selectOneByTKMapper(String  id);
+    TestPo selectOneByTKMapper(String id);
+
     //tkmapper 新增
     int instOneByTKMapper(String id);
 

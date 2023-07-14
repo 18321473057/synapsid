@@ -46,17 +46,17 @@ public class ImageDrawer {
 
             //文字
             g.setColor(Color.BLACK);
-            g.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+            g.setFont(new Font("微软雅黑" , Font.PLAIN, 12));
             g.drawString(message01, 10, 235 + 81 + 20);
-            g.drawString("毛衣马甲外套", 10, 235 + 81 + 35);
+            g.drawString("毛衣马甲外套" , 10, 235 + 81 + 35);
             //金额红色醒目
             g.setColor(Color.red);
-            g.drawString("$250", 10, 235 + 81 + 20+60);
+            g.drawString("$250" , 10, 235 + 81 + 20 + 60);
             g.setColor(Color.BLACK);
-            g.drawString("$250", 40, 235 + 81 + 20+60);
+            g.drawString("$250" , 40, 235 + 81 + 20 + 60);
 
             g.dispose();
-            ImageIO.write(background, "jpg", new File(outPutPath));
+            ImageIO.write(background, "jpg" , new File(outPutPath));
         } catch (Exception e) {
             e.printStackTrace();
         }

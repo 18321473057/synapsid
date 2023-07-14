@@ -1,6 +1,5 @@
 package com.line.common.test.push;
 
-import com.line.base.web.response.annotation.PageResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,12 +17,12 @@ import java.util.Random;
 public class SeePushController {
 
     @GetMapping("/index")
-    public ModelAndView index(){
+    public ModelAndView index() {
         return new ModelAndView();
     }
 
-    @GetMapping(value = "/random",produces = "text/event-stream")
-    public  Integer redorm(){
+    @GetMapping(value = "/random" , produces = "text/event-stream")
+    public Integer redorm() {
         return new Random().nextInt();
     }
 }

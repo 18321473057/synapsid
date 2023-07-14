@@ -32,7 +32,7 @@ public class LoginConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(prefix = "line.web.context", name = "enable")
+    @ConditionalOnProperty(prefix = "line.web.context" , name = "enable")
     public ContextFilter contextFilter() {
         ContextFilter contextFilter = new ContextFilter();
         contextFilter.setExcludeUrlPatterns(contextFilterProperties.getExcludeUrlPatterns());
@@ -44,7 +44,7 @@ public class LoginConfiguration {
      */
     @Bean
     @ConditionalOnBean(ContextFilter.class)
-    @ConditionalOnProperty(prefix = "line.web.context", name = "enable")
+    @ConditionalOnProperty(prefix = "line.web.context" , name = "enable")
     public FilterRegistrationBean contextFilterRegistration(ContextFilter contextFilter) {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setFilter(contextFilter);

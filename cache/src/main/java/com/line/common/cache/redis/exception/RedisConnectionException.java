@@ -2,7 +2,6 @@ package com.line.common.cache.redis.exception;
 
 
 /**
- * @author 陈宇霖
  * @ClassName RedisConnectionException
  * @Description Redis连接异常
  * @date 2017年08月07日08:43:46

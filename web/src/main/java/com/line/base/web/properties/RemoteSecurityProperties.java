@@ -3,7 +3,6 @@ package com.line.base.web.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "line.web.server.security")
 public class RemoteSecurityProperties {
 
-    private Map<String,String> securityMap;
+    private Map<String, String> securityMap;
 
 
     public Map<String, String> getSecurityMap() {

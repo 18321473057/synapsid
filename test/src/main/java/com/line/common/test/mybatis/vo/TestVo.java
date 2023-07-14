@@ -1,7 +1,6 @@
 package com.line.common.test.mybatis.vo;
 
 import com.line.base.datasource.mybatis.baseVo.BaseVo;
-import com.line.base.datasource.mybatis.baseVo.PageVo;
 
 /**
  * @Author: yangcs

@@ -36,7 +36,7 @@ public class DatasourceChangeAspect {
                 String datasourceType = annotation.value();
                 //设置当前处理的数据源类型为注解上指定的
                 ContextDatasourceTypeHolder.setDatasourceType(datasourceType);
-                System.out.println("------当前数据源名称-------"+datasourceType);
+                System.out.println("------当前数据源名称-------" + datasourceType);
             }
             Object result = joinPoint.proceed();
             return result;

@@ -5,8 +5,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.List;
 
 /**
-* @Description: 数据源配置
-*/
+ * @Description: 数据源配置
+ */
 @ConfigurationProperties(prefix = "line.dynamic.datasource")
 public class DatasourceProperties {
 

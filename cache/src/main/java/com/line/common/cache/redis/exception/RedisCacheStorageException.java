@@ -1,7 +1,6 @@
 package com.line.common.cache.redis.exception;
 
 /**
- * @author 陈宇霖
  * @ClassName RedisCacheStorageException
  * @Description Redis缓存操作统一异常
  * @date 2017年08月07日08:44:33

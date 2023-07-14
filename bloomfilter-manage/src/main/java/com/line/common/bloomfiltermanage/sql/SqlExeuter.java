@@ -19,15 +19,15 @@ import java.util.TreeSet;
 @Component
 public class SqlExeuter {
 
+    private static final Logger logger = LoggerFactory.getLogger(SqlExeuter.class);
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(SqlExeuter.class);
 
     public Set<String> executeSql(String sql) {
         //     TODO    sql 应该分页
 
         List<String> maps = jdbcTemplate.queryForList(sql, String.class);
-        logger.info("初始化过滤器元素,sql=[{}],统计查询到[{}]数据", sql, maps.size());
+        logger.info("初始化过滤器元素,sql=[{}],统计查询到[{}]数据" , sql, maps.size());
         return new TreeSet<>(maps);
     }
 

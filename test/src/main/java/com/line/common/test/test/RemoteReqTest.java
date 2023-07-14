@@ -24,54 +24,9 @@ import java.util.Map;
 @RequestMapping("/test/remote")
 public class RemoteReqTest {
 
-    @RequestMapping("/1")
-    @ResponseBody
-    public Response<CRDownstreamDto> test() {
-        //时间戳
-        long timestamp = System.currentTimeMillis();
-        //消息ID(不可重复)
-        String messageId = "30594826051";
-        //指定的 apiKey
-        String apiKey = "CRRAuthorization";
-        //查询参数 acctCode
-        String acctCode = "1001446";
-
-        //根据参数key排序;
-        Map<String, Object> map = new HashMap();
-        map.put("timestamp", timestamp);
-        map.put("messageId", messageId);
-        map.put("acctCode", acctCode);
-        String paramString = MapUtils.createLinkString(map);
-
-        //指定的秘钥
-//        String securityKey = "cr123";
-        String securityKey = "&A^3*c#V/>$7{]0";
-        //请求uri
-        String uri = "/action/remote/api/cr/dealer/info/get";
-        //组装要加密的字符串
-        String signStr = uri + "|" + paramString + "|" + apiKey + "|" + securityKey;
-
-        //拼接get url
-        String fullUrl = "http://localhost/" + uri + "?" + paramString;
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json;charset=UTF-8");
-        headers.set("Accept", "application/json");
-        headers.set("apiKey", apiKey);
-        headers.set("token", MD5Utils.sign(signStr, "UTF-8"));
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        RestTemplate restTemplate = new RestTemplate();
-        System.out.println("未被加密的信息" + signStr);
-        System.out.println("加密信息" + MD5Utils.sign(signStr, "UTF-8"));
-        String json = restTemplate.exchange(fullUrl, HttpMethod.GET, entity, String.class).getBody();
-        return JSONObject.parseObject(json, Response.class);
-    }
-
-
-
-//    private static String distributorUrl = "http://www.etianneng.cn/";
+    //    private static String distributorUrl = "http://www.etianneng.cn/";
     private static String distributorUrl = "http://localhost/";
-//    private static String distributorUrl = "http://192.168.51.242/";
+    //    private static String distributorUrl = "http://192.168.51.242/";
 //    private static String distributorUrl = "http://192.168.34.110/";
     private static String uri = "/action/remote/api/cr/dealer/info/get";
 
@@ -97,9 +52,9 @@ public class RemoteReqTest {
         String acctCode = "1512968";
         //根据参数key排序;
         Map<String, Object> map = new HashMap();
-        map.put("timestamp", timestamp);
-        map.put("messageId", messageId);
-        map.put("acctCode", acctCode);
+        map.put("timestamp" , timestamp);
+        map.put("messageId" , messageId);
+        map.put("acctCode" , acctCode);
         String paramString = MapUtils.createLinkString(map);
         //指定的秘钥
         String securityKey = "&A^3*c#V/>$7{]0";
@@ -108,12 +63,12 @@ public class RemoteReqTest {
         //组装要加密的字符串
         String signStr = uri + "|" + paramString + "|" + apiKey + "|" + securityKey;
         //拼接get url
-        String fullUrl =distributorUrl+ uri + "?" + paramString;
+        String fullUrl = distributorUrl + uri + "?" + paramString;
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json;charset=UTF-8");
-        headers.set("Accept", "application/json");
-        headers.set("apiKey", apiKey);
-        headers.set("token", MD5Utils.sign(signStr, "UTF-8"));
+        headers.set("Content-Type" , "application/json;charset=UTF-8");
+        headers.set("Accept" , "application/json");
+        headers.set("apiKey" , apiKey);
+        headers.set("token" , MD5Utils.sign(signStr, "UTF-8"));
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         RestTemplate restTemplate = new RestTemplate();
         System.out.println("未被加密的信息" + signStr);
@@ -122,10 +77,53 @@ public class RemoteReqTest {
             ResponseEntity<String> exchange = restTemplate.exchange(fullUrl, HttpMethod.GET, entity, String.class);
             String body = exchange.getBody();
             System.out.println("返回信息" + body);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    @RequestMapping("/1")
+    @ResponseBody
+    public Response<CRDownstreamDto> test() {
+        //时间戳
+        long timestamp = System.currentTimeMillis();
+        //消息ID(不可重复)
+        String messageId = "30594826051";
+        //指定的 apiKey
+        String apiKey = "CRRAuthorization";
+        //查询参数 acctCode
+        String acctCode = "1001446";
+
+        //根据参数key排序;
+        Map<String, Object> map = new HashMap();
+        map.put("timestamp" , timestamp);
+        map.put("messageId" , messageId);
+        map.put("acctCode" , acctCode);
+        String paramString = MapUtils.createLinkString(map);
+
+        //指定的秘钥
+//        String securityKey = "cr123";
+        String securityKey = "&A^3*c#V/>$7{]0";
+        //请求uri
+        String uri = "/action/remote/api/cr/dealer/info/get";
+        //组装要加密的字符串
+        String signStr = uri + "|" + paramString + "|" + apiKey + "|" + securityKey;
+
+        //拼接get url
+        String fullUrl = "http://localhost/" + uri + "?" + paramString;
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type" , "application/json;charset=UTF-8");
+        headers.set("Accept" , "application/json");
+        headers.set("apiKey" , apiKey);
+        headers.set("token" , MD5Utils.sign(signStr, "UTF-8"));
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println("未被加密的信息" + signStr);
+        System.out.println("加密信息" + MD5Utils.sign(signStr, "UTF-8"));
+        String json = restTemplate.exchange(fullUrl, HttpMethod.GET, entity, String.class).getBody();
+        return JSONObject.parseObject(json, Response.class);
     }
 
 

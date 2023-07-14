@@ -51,13 +51,6 @@ public class SessionContext {
     }
 
     /**
-     * 设置当前登录用户id
-     */
-    public static void setCurrentUserId(String userId) {
-        setAttribute(SESSION_USER_ID_ATTRIBUTE_NAME, userId);
-    }
-
-    /**
      * 获取当前登录用户id
      */
     public static String getCurrentUserId() {
@@ -65,10 +58,10 @@ public class SessionContext {
     }
 
     /**
-     * 设置方言
+     * 设置当前登录用户id
      */
-    public static void setCurrentLocal(Locale local) {
-        setAttribute(SESSION_LOCAL_ATTRIBUTE_NAME, local);
+    public static void setCurrentUserId(String userId) {
+        setAttribute(SESSION_USER_ID_ATTRIBUTE_NAME, userId);
     }
 
     /**
@@ -76,6 +69,13 @@ public class SessionContext {
      */
     public static Locale getCurrentLocal() {
         return (Locale) getAttribute(SESSION_LOCAL_ATTRIBUTE_NAME);
+    }
+
+    /**
+     * 设置方言
+     */
+    public static void setCurrentLocal(Locale local) {
+        setAttribute(SESSION_LOCAL_ATTRIBUTE_NAME, local);
     }
 
     /**

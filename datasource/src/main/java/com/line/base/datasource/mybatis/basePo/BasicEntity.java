@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
-* @Description: 实体通用参数
-*/
+ * @Description: 实体通用参数
+ */
 public class BasicEntity implements Serializable {
 
     private static final long serialVersionUID = 1392162988610720992L;

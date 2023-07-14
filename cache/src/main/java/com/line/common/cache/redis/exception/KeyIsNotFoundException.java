@@ -1,7 +1,6 @@
 package com.line.common.cache.redis.exception;
 
 /**
- * @author 陈宇霖
  * @ClassName KeyIsNotFoundException
  * @Description key不存在
  * @date 2017年08月07日07:59:11

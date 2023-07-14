@@ -1,7 +1,6 @@
 package com.line.base.datasource.mybatis.service.insert;
 
 /**
- * @author 刘德云
  * @version V1.0
  * @title: IDeleteService
  * @package com.hoau.leo.common.mapper.service.insert

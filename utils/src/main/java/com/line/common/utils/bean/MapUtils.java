@@ -10,6 +10,7 @@ public class MapUtils {
 
     /**
      * 去除map中值为空的记录
+     *
      * @return 去掉空值后的新参数组
      */
     public static Map<String, Object> removeEmpty(Map<String, Object> sArray) {
@@ -26,15 +27,15 @@ public class MapUtils {
                 continue;
             }
             //空字符串
-            if (value instanceof String && ((String)value).length() == 0) {
+            if (value instanceof String && ((String) value).length() == 0) {
                 continue;
             }
             //空数组
-            if (value instanceof Object[] && ((Object[])value).length == 0) {
+            if (value instanceof Object[] && ((Object[]) value).length == 0) {
                 continue;
             }
             //空集合
-            if (value instanceof Collection && ((Collection)value).size() == 0) {
+            if (value instanceof Collection && ((Collection) value).size() == 0) {
                 continue;
             }
             result.put(entity.getKey(), value);
@@ -45,6 +46,7 @@ public class MapUtils {
 
     /**
      * 把数组所有元素排序，并按照“参数=参数值”的模式用“&”字符拼接成字符串
+     *
      * @param params 需要排序并参与字符拼接的参数组
      * @return 拼接后字符串
      */
@@ -63,9 +65,9 @@ public class MapUtils {
             Object value = params.get(key);
 
             if (i == keys.size() - 1) {//拼接时，不包括最后一个&字符
-                result.append(key).append("=").append(value instanceof Object[] ? ((Object[])value).length == 1 ? ((Object[])value)[0] : Arrays.toString((Object[])value) : value);
+                result.append(key).append("=").append(value instanceof Object[] ? ((Object[]) value).length == 1 ? ((Object[]) value)[0] : Arrays.toString((Object[]) value) : value);
             } else {
-                result.append(key).append("=").append(value instanceof Object[] ? ((Object[])value).length == 1 ? ((Object[])value)[0] : Arrays.toString((Object[])value) : value).append("&");
+                result.append(key).append("=").append(value instanceof Object[] ? ((Object[]) value).length == 1 ? ((Object[]) value)[0] : Arrays.toString((Object[]) value) : value).append("&");
             }
         }
 

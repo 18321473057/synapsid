@@ -9,12 +9,9 @@ import com.line.base.web.request.RemoteRequestDto;
 import com.line.common.utils.bean.MapUtils;
 import com.line.common.utils.encryption.MD5Utils;
 import org.apache.commons.lang3.StringUtils;
-//import org.redisson.api.RLock;
-//import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.AntPathMatcher;
@@ -30,7 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+
+//import org.redisson.api.RLock;
+//import org.redisson.api.RedissonClient;
 
 /**
  * 1:该过滤器只做接口鉴权和保护使用,不做自动封装返回对象逻辑;
@@ -55,16 +54,15 @@ public class RemoteApiFilter extends OncePerRequestFilter {
      * 允许的请求延迟时间(秒), 默认3分钟
      */
     protected long requestTimeDelaySeconds = 180;
+    //    @Autowired
+//    private RedissonClient redisson;
+    AntPathMatcher antPathMatcher = new AntPathMatcher();
     /**
      * 排除校验的地址
      */
     private List<String> excludeUrlPatterns = new ArrayList(Arrays.asList("/sync/*"));
-
     @Autowired
     private RemoteSecurityProperties properties;
-//    @Autowired
-//    private RedissonClient redisson;
-    AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
@@ -91,7 +89,7 @@ public class RemoteApiFilter extends OncePerRequestFilter {
         if (StringUtils.isEmpty(securityInfo.getApiKey()) || StringUtils.isEmpty(securityInfo.getAuthorization())
                 || StringUtils.isEmpty(securityInfo.getHttpMethod()) || StringUtils.isEmpty(securityInfo.getRequestUri())) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
-            logger.error("鉴权信息不足,httpMethod=[{}],requestUri=[{}],apiKey=[{}],token=[{}]", securityInfo.getHttpMethod(), securityInfo.getRequestUri(),
+            logger.error("鉴权信息不足,httpMethod=[{}],requestUri=[{}],apiKey=[{}],token=[{}]" , securityInfo.getHttpMethod(), securityInfo.getRequestUri(),
                     securityInfo.getApiKey(), securityInfo.getAuthorization());
             return;
         }
@@ -110,13 +108,13 @@ public class RemoteApiFilter extends OncePerRequestFilter {
             securityInfo.setMessageId(requestDto.getMessageId());
         } else {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            logger.error("httpMethod=[{}],requestUri=[{}],只支持get.post请求方式", securityInfo.getHttpMethod(), securityInfo.getRequestUri());
+            logger.error("httpMethod=[{}],requestUri=[{}],只支持get.post请求方式" , securityInfo.getHttpMethod(), securityInfo.getRequestUri());
             return;
         }
 
         //请求身份标识参数校验
         if (securityInfo.getTimestamp() == 0 || StringUtils.isEmpty(securityInfo.getMessageId())) {
-            logger.error("鉴权信息不足,requestUri=[{}],timestamp=[{}],messageId=[{}]", securityInfo.getRequestUri(), securityInfo.getTimestamp(), securityInfo.getMessageId());
+            logger.error("鉴权信息不足,requestUri=[{}],timestamp=[{}],messageId=[{}]" , securityInfo.getRequestUri(), securityInfo.getTimestamp(), securityInfo.getMessageId());
             response.setStatus(HttpStatus.FORBIDDEN.value());
             return;
         }
@@ -126,7 +124,7 @@ public class RemoteApiFilter extends OncePerRequestFilter {
         long differSeconds = currentTimeMillis - securityInfo.getTimestamp();
         if (differSeconds < 0 || differSeconds > requestTimeDelaySeconds) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            logger.error(" 请求时间超时,请求信息[{}]", JSONObject.toJSON(securityInfo));
+            logger.error(" 请求时间超时,请求信息[{}]" , JSONObject.toJSON(securityInfo));
             return;
         }
 
@@ -146,14 +144,14 @@ public class RemoteApiFilter extends OncePerRequestFilter {
         String secureKey = properties.getSecurityMap().get(securityInfo.getApiKey());
         if (StringUtils.isEmpty(secureKey)) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
-            logger.error("鉴权失败,未能获取秘钥,请求地址[{}],,apiKey=[{}]", securityInfo.getRequestUri(), securityInfo.getApiKey());
+            logger.error("鉴权失败,未能获取秘钥,请求地址[{}],,apiKey=[{}]" , securityInfo.getRequestUri(), securityInfo.getApiKey());
             return;
         }
         String signStr = securityInfo.getRequestUri() + "|" + securityInfo.getSecurityBodyStr() + "|" + securityInfo.getApiKey() + "|";
 
-        logger.info("请求地址[{}],鉴权信息:paramsString=[{}]", securityInfo.getRequestUri(), signStr + secureKey);
-        logger.info("请求地址[{}],鉴权信息:token=[{}]", securityInfo.getRequestUri(), securityInfo.getAuthorization());
-        logger.info("请求地址[{}],鉴权信息:characterEncoding=[{}]", securityInfo.getRequestUri(), request.getCharacterEncoding());
+        logger.info("请求地址[{}],鉴权信息:paramsString=[{}]" , securityInfo.getRequestUri(), signStr + secureKey);
+        logger.info("请求地址[{}],鉴权信息:token=[{}]" , securityInfo.getRequestUri(), securityInfo.getAuthorization());
+        logger.info("请求地址[{}],鉴权信息:characterEncoding=[{}]" , securityInfo.getRequestUri(), request.getCharacterEncoding());
 
         //校验签名结果是否正确
         boolean verifyResult = MD5Utils.verify(signStr, securityInfo.getAuthorization(), secureKey, request.getCharacterEncoding());

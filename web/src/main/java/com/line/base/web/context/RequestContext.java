@@ -6,8 +6,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* @Description: RequstContext request上下文操作 存放本次请求Id 和用户id
-*/
+ * @Description: RequstContext request上下文操作 存放本次请求Id 和用户id
+ */
 public class RequestContext {
 
     /**
@@ -23,7 +23,8 @@ public class RequestContext {
     /**
      * 私有构造方法，不允许实例化
      */
-    private RequestContext() {}
+    private RequestContext() {
+    }
 
     /**
      * 全局获取request的方法
@@ -37,6 +38,13 @@ public class RequestContext {
     }
 
     /**
+     * 获取RequestId
+     */
+    public static String getRequestId() {
+        return (String) getRequest().getAttribute(RequestContext.REQUEST_ID_ATTRIBUTE_NAME);
+    }
+
+    /**
      * 设置requestId
      */
     public static void setRequestId(String requestId) {
@@ -44,10 +52,10 @@ public class RequestContext {
     }
 
     /**
-     * 获取RequestId
+     * 获取当前登录的用户Id
      */
-    public static String getRequestId() {
-        return (String)getRequest().getAttribute(RequestContext.REQUEST_ID_ATTRIBUTE_NAME);
+    public static String getCurrentUserId() {
+        return (String) getRequest().getAttribute(RequestContext.REQUEST_USER_ID_ATTRIBUTE_NAME);
     }
 
     /**
@@ -55,13 +63,6 @@ public class RequestContext {
      */
     public static void setCurrentUserId(String userId) {
         getRequest().setAttribute(RequestContext.REQUEST_USER_ID_ATTRIBUTE_NAME, userId);
-    }
-
-    /**
-     * 获取当前登录的用户Id
-     */
-    public static String getCurrentUserId() {
-        return (String)getRequest().getAttribute(RequestContext.REQUEST_USER_ID_ATTRIBUTE_NAME);
     }
 
 }

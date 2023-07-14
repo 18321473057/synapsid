@@ -25,17 +25,16 @@ import java.util.Map;
  */
 @Configuration
 @EnableConfigurationProperties(DatasourceProperties.class)
-@ConditionalOnProperty(prefix = "line.dynamic.datasource", name = "enable")
+@ConditionalOnProperty(prefix = "line.dynamic.datasource" , name = "enable")
 public class DatasourceChangeConfiguration {
 
+    Log logger = LogFactory.getLog(DatasourceChangeConfiguration.class);
     @Autowired
     private DatasourceProperties datasourceProperties;
 
-    Log logger = LogFactory.getLog(DatasourceChangeConfiguration.class);
-
     /**
      * 声明多数据源切换切面
-     * */
+     */
     @Bean
     public DatasourceChangeAspect datasourceChangeAspect() {
         DatasourceChangeAspect changeAspect = new DatasourceChangeAspect();
@@ -90,7 +89,7 @@ public class DatasourceChangeConfiguration {
         try {
             datasource.setFilters(druidProperties.getFilters());
         } catch (SQLException e) {
-            logger.error("druid configuration initialization filter", e);
+            logger.error("druid configuration initialization filter" , e);
         }
         return datasource;
     }

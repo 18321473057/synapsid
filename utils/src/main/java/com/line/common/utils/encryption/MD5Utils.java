@@ -12,6 +12,7 @@ public class MD5Utils {
 
     /**
      * 签名字符串
+     *
      * @param text          需要签名的字符串
      * @param input_charset 编码格式
      * @return 签名结果

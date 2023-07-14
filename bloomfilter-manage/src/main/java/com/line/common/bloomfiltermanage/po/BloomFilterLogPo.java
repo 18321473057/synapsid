@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * @Date: 2020/12/8 9:04
  * @Description:
  */
-@Table(name="t_bloomfilter_log")
+@Table(name = "t_bloomfilter_log")
 public class BloomFilterLogPo extends BasicEntity {
     // 布隆过滤器名称
     private String bfName;

@@ -8,12 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserCache extends DefaultTTLRedisCache<UserDTO> {
 
+    public static final String UUID = UserCache.class.getName();
     @Autowired
     private RedisCacheStorage redisCacheStorage;
     @Autowired
     private UserCacheProvider userCacheProvider;
-
-    public static final String UUID = UserCache.class.getName();
 
     public String getUUID() {
         return UUID;

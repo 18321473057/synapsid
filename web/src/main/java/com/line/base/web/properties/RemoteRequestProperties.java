@@ -12,7 +12,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "line.web.client.security")
 public class RemoteRequestProperties {
 
-    private Map<String,String> securityMap;
+    private Map<String, String> securityMap;
 
 
     public Map<String, String> getSecurityMap() {

@@ -20,6 +20,32 @@ public class Response<T> extends ResponseBaseDto {
     private T obj;
 
 
+    public Response() {
+
+    }
+
+    public Response(Boolean success, String result) {
+        this.success = success;
+        this.result = result;
+    }
+
+    public Response(Boolean success, T obj) {
+        this.success = success;
+        this.obj = obj;
+    }
+
+    public Response(Boolean success, T obj, String msgId) {
+        this.success = success;
+        this.obj = obj;
+        super.setMessageId(msgId);
+    }
+
+    public Response(Boolean success, T rows, Long total) {
+        this.success = success;
+        this.rows = rows;
+        this.total = total;
+    }
+
     /**
      * @Description: 构建成功信息
      */
@@ -92,40 +118,12 @@ public class Response<T> extends ResponseBaseDto {
         this.result = result;
     }
 
-
     public T getObj() {
         return obj;
     }
 
     public void setObj(T obj) {
         this.obj = obj;
-    }
-
-    public Response() {
-
-    }
-
-    public Response(Boolean success, String result) {
-        this.success = success;
-        this.result = result;
-    }
-
-    public Response(Boolean success, T obj) {
-        this.success = success;
-        this.obj = obj;
-    }
-
-    public Response(Boolean success, T obj, String msgId) {
-        this.success = success;
-        this.obj = obj;
-        super.setMessageId(msgId);
-    }
-
-
-    public Response(Boolean success, T rows, Long total) {
-        this.success = success;
-        this.rows = rows;
-        this.total = total;
     }
 
 }

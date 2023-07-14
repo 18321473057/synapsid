@@ -1,7 +1,6 @@
 package com.line.common.cache.redis.exception;
 
 /**
- * @author 陈宇霖
  * @ClassName ValueIsNullException
  * @Description key存在，value为null
  * @date 2017年08月07日07:58:41

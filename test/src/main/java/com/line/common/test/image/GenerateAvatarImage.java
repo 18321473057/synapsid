@@ -44,7 +44,7 @@ public class GenerateAvatarImage {
         graphics.drawOval(border2, border2, width - border2 * 2, width - border2 * 2);
         graphics.dispose();
         try (OutputStream os = new FileOutputStream("D:\\temp-avatar.png")) {
-            ImageIO.write(formatAvatarImage, "PNG", os);
+            ImageIO.write(formatAvatarImage, "PNG" , os);
         }
         url = "https://img-blog.csdn.net/20180529213113521";
         BufferedImage srcImg = ImageIO.read(new URL(url));
@@ -57,7 +57,7 @@ public class GenerateAvatarImage {
         int y = (blankImage.getHeight() - width) / 2;
         graphics.drawImage(formatAvatarImage, x, y, width, width, null);
         try (OutputStream os = new FileOutputStream("D:\\temp-blank.png")) {
-            ImageIO.write(blankImage, "PNG", os);
+            ImageIO.write(blankImage, "PNG" , os);
         }
 
     }

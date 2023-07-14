@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 import java.util.List;
 
 /**
- * @author 刘德云
  * @version V1.0
  * @title: IDeleteService
  * @package com.hoau.leo.common.mapper.service.select

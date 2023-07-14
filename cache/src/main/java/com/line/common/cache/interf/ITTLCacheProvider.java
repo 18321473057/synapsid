@@ -7,6 +7,7 @@ public interface ITTLCacheProvider<V> {
 
     /**
      * 加载单个元素
+     *
      * @param key
      * @return V
      * @since:

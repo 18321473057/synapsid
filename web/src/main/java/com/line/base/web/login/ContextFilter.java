@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author 陈宇霖
  * @version V1.0
  * @Title: ContextFilter
  * @Package com.hoau.leo.common.filter
@@ -37,11 +36,8 @@ import java.util.UUID;
 public class ContextFilter extends OncePerRequestFilter implements ApplicationContextAware {
 
     Log logger = LogFactory.getLog(ContextFilter.class);
-
-    private ApplicationContext applicationContext;
-
     AntPathMatcher antPathMatcher = new AntPathMatcher();
-
+    private ApplicationContext applicationContext;
     /**
      * 不进行过滤的请求pattern
      */

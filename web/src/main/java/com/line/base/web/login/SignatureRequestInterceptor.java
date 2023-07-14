@@ -28,10 +28,8 @@ import java.util.Map;
 @Component
 public class SignatureRequestInterceptor implements ClientHttpRequestInterceptor, ApplicationContextAware {
 
-    private static ApplicationContext applicationContext;
-
     private static final Logger logger = LoggerFactory.getLogger(SignatureRequestInterceptor.class);
-
+    private static ApplicationContext applicationContext;
     /**
      * 用于签名的公钥
      */
@@ -94,9 +92,9 @@ public class SignatureRequestInterceptor implements ClientHttpRequestInterceptor
                 + getSecurityKey();
         String signResult = MD5Utils.sign(signStr, "UTF-8");
         HttpHeaders headers = request.getHeaders();
-        headers.add("ApiKey", getApiKey());
-        headers.add("Authorization", signResult);
-        headers.add("TimeStamp", String.valueOf(System.currentTimeMillis()));
+        headers.add("ApiKey" , getApiKey());
+        headers.add("Authorization" , signResult);
+        headers.add("TimeStamp" , String.valueOf(System.currentTimeMillis()));
         logger.info("request the itf:" + requestUrl);
         logger.info("signStr:" + signStr);
         logger.info("signResult:" + signResult);

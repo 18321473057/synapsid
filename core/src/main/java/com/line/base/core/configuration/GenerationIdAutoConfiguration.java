@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description id生成器配置以及自动装配
  */
 @Configuration
-@ConditionalOnProperty(prefix = "id.generate", name = "enable")
+@ConditionalOnProperty(prefix = "id.generate" , name = "enable")
 @EnableConfigurationProperties(GenerationIdProperties.class)
 public class GenerationIdAutoConfiguration {
 

@@ -12,9 +12,9 @@ import java.util.Random;
  */
 public class WeightRule {
     private static List<ServerBean> serverBeans = new ArrayList<ServerBean>() {{
-        add(new ServerBean("name1", 10));
-        add(new ServerBean("name3", 70));
-        add(new ServerBean("name2", 20));
+        add(new ServerBean("name1" , 10));
+        add(new ServerBean("name3" , 70));
+        add(new ServerBean("name2" , 20));
     }};
 
 
@@ -27,7 +27,7 @@ public class WeightRule {
     private static ServerBean getSelectBean(ServerBeanWeightAware serverBeanWeightAware) {
         //获取概率分布
         List<Integer> weightDistribute = serverBeanWeightAware.getWeightList();
-        int random = new Random().nextInt(weightDistribute.get(weightDistribute.size()-1));
+        int random = new Random().nextInt(weightDistribute.get(weightDistribute.size() - 1));
         for (int i = 0; i < weightDistribute.size(); i++) {
             if (random <= weightDistribute.get(i)) {
                 //选中的服务对象
@@ -37,6 +37,11 @@ public class WeightRule {
         return null;
     }
 
+    private static void soutList(List<? extends Object> serverBeans) {
+        serverBeans.forEach(bean -> {
+            System.out.println(bean);
+        });
+    }
 
     static class ServerBeanWeightAware {
         //权重分布图
@@ -83,12 +88,6 @@ public class WeightRule {
         public void setSortServerBeans(List<ServerBean> sortServerBeans) {
             this.sortServerBeans = sortServerBeans;
         }
-    }
-
-    private static void soutList(List<? extends Object> serverBeans) {
-        serverBeans.forEach(bean -> {
-            System.out.println(bean);
-        });
     }
 
 

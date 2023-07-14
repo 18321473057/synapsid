@@ -3,7 +3,6 @@ package com.line.base.web.dataprovider;
 import com.line.base.web.entity.IUser;
 
 /**
- * @author 陈宇霖
  * @version V1.0
  * @Title: IUserProvider
  * @Package com.hoau.leo.common.dataprovider
@@ -17,7 +16,6 @@ public interface IUserProvider {
      *
      * @param userId
      * @return
-     * @author 陈宇霖
      * @date 2017年08月02日21:28:42
      */
     IUser getUserById(String userId);

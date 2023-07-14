@@ -6,7 +6,6 @@ import java.util.Map;
 /**
  * @param <K> 缓存Key类型
  * @param <V> 缓存Value类型
- * @author 陈宇霖
  * @ClassName ICache
  * @Description 缓存接口
  * @date 2017年08月07日07:54:09

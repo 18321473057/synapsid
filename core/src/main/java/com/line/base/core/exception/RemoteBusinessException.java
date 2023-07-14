@@ -21,8 +21,6 @@ public class RemoteBusinessException extends RuntimeException {
     private List<RemoteErrorItemDto> errorList;
 
 
-
-
     public RemoteBusinessException(String code, String message) {
         super(message);
         this.code = code;
@@ -40,6 +38,10 @@ public class RemoteBusinessException extends RuntimeException {
 
     public RemoteBusinessException() {
 
+    }
+
+    public RemoteBusinessException(String message) {
+        super(message);
     }
 
     public String getMessageId() {
@@ -72,9 +74,5 @@ public class RemoteBusinessException extends RuntimeException {
 
     public void setErrorList(List<RemoteErrorItemDto> errorList) {
         this.errorList = errorList;
-    }
-
-    public RemoteBusinessException(String message) {
-        super(message);
     }
 }

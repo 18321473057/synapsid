@@ -1,7 +1,6 @@
 package com.line.common.cache.redis.exception;
 
 /**
- * @author 陈宇霖
  * @ClassName CacheConfigException
  * @Description 缓存配置异常
  * @date 2017年08月07日07:55:36

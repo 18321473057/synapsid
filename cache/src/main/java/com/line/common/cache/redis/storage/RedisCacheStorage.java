@@ -25,15 +25,13 @@ import java.util.concurrent.TimeUnit;
 public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, InitializingBean {
 
     /**
-     * 实际进行缓存操作的template，由spring提供
-     */
-    private RedisTemplate redisTemplate;
-
-    /**
      * 日志
      */
     Log log = LogFactory.getLog(getClass());
-
+    /**
+     * 实际进行缓存操作的template，由spring提供
+     */
+    private RedisTemplate redisTemplate;
     /**
      * 初始化Strong cache任务
      */
@@ -65,6 +63,7 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, Initial
         redisTemplate.opsForValue().set(key, value, exp, TimeUnit.SECONDS);
         return true;
     }
+
     /**
      * <p>存入空对象数据</p>
      *
@@ -229,39 +228,6 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, Initial
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * 初始化只读缓存
      *
@@ -327,16 +293,24 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, Initial
      */
     private void retryStorage(String cacheId, Map<K, V> map) {
         if (strongTask == null) {
-            strongTask = new StrongCacheTask("重试初始化Strong Cache任务", cacheId, map);
+            strongTask = new StrongCacheTask("重试初始化Strong Cache任务" , cacheId, map);
             strongTask.setDaemon(true);
             strongTask.start();
         } else if (strongTask.getState().name().equals(Thread.State.NEW.name())) {
             strongTask.start();
         } else if (strongTask.getState().name().equals(Thread.State.TERMINATED.name())) {
-            strongTask = new StrongCacheTask("重试初始化Strong Cache任务", cacheId, map);
+            strongTask = new StrongCacheTask("重试初始化Strong Cache任务" , cacheId, map);
             strongTask.setDaemon(true);
             strongTask.start();
         }
+    }
+
+    public void afterPropertiesSet() throws Exception {
+
+    }
+
+    public void setRedisTemplate(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -383,14 +357,6 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStore<K, V>, Initial
             }
         }
 
-    }
-
-    public void afterPropertiesSet() throws Exception {
-
-    }
-
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
     }
 
 }

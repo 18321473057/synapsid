@@ -1,13 +1,12 @@
 package com.line.base.web.constans;
 
 /**
-* @Title: UrlConstants 
-* @Package com.hoau.leo.util.constant 
-* @Description: Url通用常量
-* @author 陈宇霖  
-* @date 2017/8/2 18:20
-* @version V1.0   
-*/
+ * @version V1.0
+ * @Title: UrlConstants
+ * @Package com.hoau.leo.util.constant
+ * @Description: Url通用常量
+ * @date 2017/8/2 18:20
+ */
 public class UrlConstants {
 
     /**

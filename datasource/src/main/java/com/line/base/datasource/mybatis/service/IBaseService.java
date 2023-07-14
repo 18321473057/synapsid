@@ -7,7 +7,6 @@ import com.line.base.datasource.mybatis.service.select.ISelectService;
 import com.line.base.datasource.mybatis.service.update.IUpdateService;
 
 /**
- * @author 刘德云
  * @version V1.0
  * @title: IDeleteService
  * @package com.hoau.leo.common.mapper.service

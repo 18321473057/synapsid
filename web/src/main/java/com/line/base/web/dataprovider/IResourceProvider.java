@@ -3,7 +3,6 @@ package com.line.base.web.dataprovider;
 import com.line.base.web.entity.IResource;
 
 /**
- * @author 陈宇霖
  * @version V1.0
  * @Title: IResourceProvider
  * @Package com.hoau.leo.common.dataprovider
@@ -18,7 +17,6 @@ public interface IResourceProvider {
      * @param accessUri
      * @param systemCode
      * @return
-     * @author 陈宇霖
      * @date 2017年08月06日09:26:04
      */
     IResource getResource(String accessUri, String systemCode);

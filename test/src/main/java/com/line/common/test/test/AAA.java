@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -30,7 +29,6 @@ public class AAA implements ApplicationContextAware, InitializingBean {
 //            String string1 = resultSet.getString(0);
 //            String string = resultSet.getString(1);
 //        }
-
 
 
         Statement statement = bean.getConnection().createStatement();

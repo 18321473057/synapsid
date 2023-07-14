@@ -15,11 +15,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShowDownUtils {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShowDownUtils.class);
     @Autowired
     private ApplicationContext context;
-
-    private static final Logger logger = LoggerFactory.getLogger(ShowDownUtils.class);
-
 
     /**
      * 项目启动是 必须初始化的代码 发生错误;可以终止项目启动

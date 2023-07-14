@@ -7,8 +7,8 @@ package com.line.common.test.resposttest;
  */
 public class TestModel {
 
-    private String  name;
-    private String  age;
+    private String name;
+    private String age;
 
     public String getName() {
         return name;

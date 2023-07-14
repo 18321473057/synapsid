@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 @AutoConfigureAfter(DatasourceChangeConfiguration.class)
-@ConditionalOnProperty(prefix = "line.mybatis", name = "enable")
+@ConditionalOnProperty(prefix = "line.mybatis" , name = "enable")
 public class MybatisSessionfactoryAutoConfiguration implements TransactionManagementConfigurer {
 
     @Autowired

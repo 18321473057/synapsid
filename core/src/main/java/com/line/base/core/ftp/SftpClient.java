@@ -23,9 +23,8 @@ import java.util.Properties;
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SftpClient {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
-
     private final FtpConfig ftpConfig;
+    private Logger logger = LoggerFactory.getLogger(getClass());
     /**
      * sftp连接通道对象
      */
@@ -58,7 +57,7 @@ public class SftpClient {
         ;
         sshSession.setPassword(ftpConfig.getPassWord());
         sshSession.setConfig(new Properties() {{
-            put("StrictHostKeyChecking", "no");
+            put("StrictHostKeyChecking" , "no");
         }});
         sshSession.connect();
         channel = sshSession.openChannel("sftp");
@@ -74,7 +73,7 @@ public class SftpClient {
             SftpATTRS sftpATTRS = sftp.lstat(directory);
             return sftpATTRS.isDir();
         } catch (SftpException e) {
-            logger.error("sftp服务器判断文件夹是否存在发生异常,{}", e);
+            logger.error("sftp服务器判断文件夹是否存在发生异常,{}" , e);
         }
         return false;
     }
@@ -106,7 +105,7 @@ public class SftpClient {
                 }
             }
         } catch (Exception e) {
-            logger.error("sftp服务器创建目录失败,{}", e);
+            logger.error("sftp服务器创建目录失败,{}" , e);
         }
     }
 
@@ -129,9 +128,9 @@ public class SftpClient {
      */
     public void upload(String directory, File uploadFile, String fileName) {
         try {
-            upload(directory,new FileInputStream(uploadFile),fileName);
+            upload(directory, new FileInputStream(uploadFile), fileName);
         } catch (FileNotFoundException e) {
-            logger.error("上传文件到sftp服务器异常,{}", e);
+            logger.error("上传文件到sftp服务器异常,{}" , e);
         }
     }
 
@@ -146,7 +145,7 @@ public class SftpClient {
             createDir(directory);
             sftp.put(inputStream, fileName);
         } catch (Exception e) {
-            logger.error("上传文件到sftp服务器异常,{}", e);
+            logger.error("上传文件到sftp服务器异常,{}" , e);
         }
     }
 
@@ -163,7 +162,7 @@ public class SftpClient {
             File file = new File(saveFile);
             sftp.get(downloadFile, new FileOutputStream(file));
         } catch (Exception e) {
-            logger.error("从sftp服务器下载文件异常,{}", e);
+            logger.error("从sftp服务器下载文件异常,{}" , e);
         }
     }
 
@@ -190,7 +189,7 @@ public class SftpClient {
      */
     public byte[] downloadForBytes(String directory, String downloadFile)
             throws SftpException, IOException {
-        ByteArrayOutputStream outputStream  = new ByteArrayOutputStream();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             sftp.cd(directory);
             sftp.get(downloadFile, outputStream);
@@ -201,7 +200,7 @@ public class SftpClient {
                     outputStream.close();
                 }
             } catch (IOException e) {
-                logger.error("读取sftp文件内容异常,{}", e);
+                logger.error("读取sftp文件内容异常,{}" , e);
             }
         }
     }
@@ -230,13 +229,13 @@ public class SftpClient {
             sftp.cd(directory);
             sftp.rm(deleteFile);
         } catch (Exception e) {
-            logger.error("删除sftp文件发生异常,{}", e);
+            logger.error("删除sftp文件发生异常,{}" , e);
         }
     }
 
     /**
      * 判断是否断开了sftp连接通道 false则为断开
-     * */
+     */
     public boolean isClosed() {
         return channel.isConnected() || sshSession.isConnected();
     }

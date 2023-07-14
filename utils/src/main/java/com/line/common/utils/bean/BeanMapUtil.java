@@ -25,7 +25,7 @@ public class BeanMapUtil {
         if (bean != null) {
             BeanMap beanMap = BeanMap.create(bean);
             for (Object key : beanMap.keySet()) {
-                map.put(key + "", beanMap.get(key));
+                map.put(key + "" , beanMap.get(key));
             }
         }
         return map;

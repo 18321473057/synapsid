@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * @Date: 2020/10/27 14:47
  * @Description:
  */
-@Table(name ="t_test")
+@Table(name = "t_test")
 public class TestPo extends BasicEntity {
 
 }

@@ -17,6 +17,10 @@ public class BasicResponse<T> {
     //返回信息
     protected String msg;
 
+    public BasicResponse() {
+
+    }
+
     protected static <R extends BasicResponse> R getScuuess(Class<R> cr) {
         try {
             R r = cr.newInstance();
@@ -31,7 +35,6 @@ public class BasicResponse<T> {
         }
     }
 
-
     protected static <R extends BasicResponse> R getError(Class<R> cr) {
         try {
             R r = cr.newInstance();
@@ -44,10 +47,6 @@ public class BasicResponse<T> {
         } catch (IllegalAccessException e) {
             throw new BusinessException("创建统一返回对象基类,cr.newInstance 发生异常");
         }
-    }
-
-    public BasicResponse() {
-
     }
 
     public Boolean getSuccess() {

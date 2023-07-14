@@ -17,7 +17,6 @@ public class CRDownstreamDto {
     private Date buildDate;
 
 
-
     //    客户名称
     private String clientName;
 

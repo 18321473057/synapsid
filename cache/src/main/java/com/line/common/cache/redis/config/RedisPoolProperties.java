@@ -1,7 +1,5 @@
 package com.line.common.cache.redis.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -18,7 +16,6 @@ public class RedisPoolProperties {
     private Integer maxWaitMillis;
 
 
-
     private Integer minEvictableIdleTimeMillis;
 
     private Integer numTestsPerEvictionRun;
@@ -28,12 +25,6 @@ public class RedisPoolProperties {
     private boolean testOnBorrow;
 
     private boolean testWhileIdle;
-
-
-
-
-
-
 
 
     public boolean isEnabled() {

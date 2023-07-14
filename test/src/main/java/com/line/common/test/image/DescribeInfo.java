@@ -17,7 +17,7 @@ public class DescribeInfo extends LocationInfo {
     //Font.BOLD（加粗）
     //Font.ITALIC（斜体）
     //Font.BOLD+ Font.ITALIC（粗斜体）
-    private Font font = new Font("微软雅黑", Font.PLAIN, 12);
+    private Font font = new Font("微软雅黑" , Font.PLAIN, 12);
 
 
     public String getMsg() {

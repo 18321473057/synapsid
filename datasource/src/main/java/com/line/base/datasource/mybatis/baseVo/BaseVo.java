@@ -8,7 +8,7 @@ import java.util.Date;
  * @Date: 2020/10/27 17:50
  * @Description:
  */
-public class BaseVo  extends PageVo implements Serializable {
+public class BaseVo extends PageVo implements Serializable {
 
     /**
      * 主键

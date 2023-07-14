@@ -5,9 +5,6 @@ import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.net.URL;
 
 /**
  * Created by zj on 2018/10/18.
@@ -27,7 +24,7 @@ public class ImageReorganization {
     public static String overlapImage(String backgroundPath, String imagePath, String message01, String message02, String outPutPath) {
         try {
             //背景图
-            BufferedImage background = resizeImage(235, 440, ImageIO.read(new File(backgroundPath)) );
+            BufferedImage background = resizeImage(235, 440, ImageIO.read(new File(backgroundPath)));
 
             //多图图片预处理
             BufferedImage image1 = resizeImage(235, 235, ImageIO.read(new File(imagePath)));
@@ -53,15 +50,14 @@ public class ImageReorganization {
             //Font.ITALIC（斜体）
             //Font.BOLD+ Font.ITALIC（粗斜体）
             g.setColor(Color.BLACK);
-            g.setFont(new Font("微软雅黑", Font.PLAIN, 12));
+            g.setFont(new Font("微软雅黑" , Font.PLAIN, 12));
             g.drawString(message01, 10, 235 + 81 + 20);
-            g.drawString("毛衣马甲外套", 10, 235 + 81 + 35);
+            g.drawString("毛衣马甲外套" , 10, 235 + 81 + 35);
             //金额红色醒目
             g.setColor(Color.red);
-            g.drawString("$250", 10, 235 + 81 + 20+60);
+            g.drawString("$250" , 10, 235 + 81 + 20 + 60);
             g.setColor(Color.BLACK);
-            g.drawString("$250", 40, 235 + 81 + 20+60);
-
+            g.drawString("$250" , 40, 235 + 81 + 20 + 60);
 
 
             //头像图片地址
@@ -82,7 +78,7 @@ public class ImageReorganization {
 
 
             g.dispose();
-            ImageIO.write(background, "jpg", new File(outPutPath));
+            ImageIO.write(background, "jpg" , new File(outPutPath));
         } catch (Exception e) {
             e.printStackTrace();
         }

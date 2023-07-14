@@ -3,8 +3,8 @@ package com.line.common.cache.redis.constant;
 import java.io.Serializable;
 
 /**
-* @Description: Redis缓存使用的常量
-*/
+ * @Description: Redis缓存使用的常量
+ */
 public class RedisConstants implements Serializable {
 
     /**

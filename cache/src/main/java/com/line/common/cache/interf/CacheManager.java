@@ -36,7 +36,6 @@ public final class CacheManager<K, V> {
      * 将缓存注册到CacheManager中，在各个缓存中调用此方法实现自主注册
      *
      * @param cache
-     * @author 陈宇霖
      * @date 2017年08月07日08:06:54
      */
     public void registerCache(ICache<K, V> cache) {
@@ -55,7 +54,6 @@ public final class CacheManager<K, V> {
      *
      * @param uuid
      * @return
-     * @author 陈宇霖
      * @date 2017年08月07日08:06:47
      */
     public ICache<K, V> unRegisterCache(String uuid) {
@@ -84,7 +82,6 @@ public final class CacheManager<K, V> {
     /**
      * 清除所有管理的缓存
      *
-     * @author 陈宇霖
      * @date 2017年08月07日08:02:30
      */
     public void shutdown() {

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class ProjectTest {
     @Autowired
     private IMailSendService mailSendService;
+
     public void send(String msg) {
         mailSendService.send(msg);
     }
